@@ -1,4 +1,4 @@
-import Link from "next/link";
+import {Link} from '@/i18n/navigation';
 
 type Product = {
     id: string;
@@ -68,7 +68,7 @@ export async function SearchResults() {
                         return (
                             <Link
                                 key={product.id}
-                                href={`/en/product/${product.slug}`}
+                                href={`/product/${product.slug}`}
                                 className="group overflow-hidden rounded-xl border bg-card transition hover:shadow-lg"
                             >
                                 <div className="aspect-square overflow-hidden bg-muted">

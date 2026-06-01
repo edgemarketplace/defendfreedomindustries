@@ -3,8 +3,6 @@ import {NavigationLink} from '@/components/shared/navigation-link';
 import {NavbarCollections} from '@/components/layout/navbar/navbar-collections';
 import {NavbarCart} from '@/components/layout/navbar/navbar-cart';
 import {NavbarUser} from '@/components/layout/navbar/navbar-user';
-import {ThemeSwitcher} from '@/components/layout/navbar/theme-switcher';
-import {LanguagePicker} from '@/components/layout/navbar/language-picker';
 import {CurrencyPickerWrapper} from '@/components/layout/navbar/currency-picker-wrapper';
 import {MobileNavWrapper} from '@/components/layout/navbar/mobile-nav-wrapper';
 import {Suspense} from "react";
@@ -37,13 +35,7 @@ export function Navbar() {
                             </Suspense>
                         </div>
                         <Suspense>
-                            <LanguagePicker />
-                        </Suspense>
-                        <Suspense>
                             <CurrencyPickerWrapper />
-                        </Suspense>
-                        <Suspense>
-                            <ThemeSwitcher />
                         </Suspense>
                         <Suspense>
                             <NavbarCart/>

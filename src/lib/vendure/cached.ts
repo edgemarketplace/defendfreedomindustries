@@ -31,12 +31,13 @@ export async function getAvailableCountriesCached(locale: string) {
 
 /**
  * Get top-level collections with caching enabled.
- * Collections rarely change, so we cache them for 1 day.
+ * Collections can change in the Vendure admin, so keep the cache short enough
+ * for newly-added collections to appear on the storefront automatically.
  * Collection names are translatable, so locale is required.
  */
 export async function getTopCollections(locale: string) {
     'use cache';
-    cacheLife('days');
+    cacheLife('hours');
     cacheTag(`collections-${locale}`);
 
     const result = await query(GetTopCollectionsQuery, undefined, {languageCode: locale});

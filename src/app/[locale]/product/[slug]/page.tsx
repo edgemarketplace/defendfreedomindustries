@@ -33,6 +33,7 @@ import {getTranslations} from 'next-intl/server';
 import {toOgLocale} from '@/i18n/locale-utils';
 import {getActiveCurrencyCode} from '@/lib/currency-server';
 import {getRouteLocale} from '@/i18n/server';
+import {localizePath} from '@/lib/localized-path';
 
 async function getProductData(slug: string, currencyCode: string) {
     'use cache';
@@ -72,9 +73,9 @@ export async function generateMetadata({
         title: product.name,
         description: description || fallbackDescription,
         alternates: {
-            canonical: buildCanonicalUrl(`/${locale}${productPath}`),
+            canonical: buildCanonicalUrl(localizePath(productPath, locale)),
             languages: Object.fromEntries(
-                routing.locales.map((l) => [l, buildCanonicalUrl(`/${l}${productPath}`)])
+                routing.locales.map((l) => [l, buildCanonicalUrl(localizePath(productPath, l))])
             ),
         },
         openGraph: {
@@ -82,7 +83,7 @@ export async function generateMetadata({
             description: description || fallbackDescription,
             type: 'website',
             locale: ogLocale,
-            url: buildCanonicalUrl(`/${locale}${productPath}`),
+            url: buildCanonicalUrl(localizePath(productPath, locale)),
             images: buildOgImages(ogImage, product.name),
         },
         twitter: {
