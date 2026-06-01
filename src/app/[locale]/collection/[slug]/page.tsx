@@ -27,6 +27,7 @@ import {toOgLocale} from '@/i18n/locale-utils';
 import {getActiveCurrencyCode} from '@/lib/currency-server';
 import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
+import {localizePath} from '@/lib/localized-path';
 
 async function getCollectionProducts(slug: string, searchParams: { [key: string]: string | string[] | undefined }, currencyCode: string) {
     'use cache';
@@ -83,9 +84,9 @@ export async function generateMetadata({
         title: collection.name,
         description,
         alternates: {
-            canonical: buildCanonicalUrl(`/${locale}${collectionPath}`),
+            canonical: buildCanonicalUrl(localizePath(collectionPath, locale)),
             languages: Object.fromEntries(
-                routing.locales.map((l) => [l, buildCanonicalUrl(`/${l}${collectionPath}`)])
+                routing.locales.map((l) => [l, buildCanonicalUrl(localizePath(collectionPath, l))])
             ),
         },
         openGraph: {
@@ -93,7 +94,7 @@ export async function generateMetadata({
             description,
             type: 'website',
             locale: ogLocale,
-            url: buildCanonicalUrl(`/${locale}${collectionPath}`),
+            url: buildCanonicalUrl(localizePath(collectionPath, locale)),
             images: buildOgImages(collection.featuredAsset?.preview, collection.name),
         },
         twitter: {

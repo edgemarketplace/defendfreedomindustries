@@ -1,5 +1,6 @@
 import NextLink from 'next/link';
 import {getRouteLocale} from '@/i18n/server';
+import {localizePath} from '@/lib/localized-path';
 import {ComponentProps} from 'react';
 
 type NavigationLinkProps = Omit<ComponentProps<typeof NextLink>, 'href'> & {
@@ -17,6 +18,6 @@ type NavigationLinkProps = Omit<ComponentProps<typeof NextLink>, 'href'> & {
  */
 export async function NavigationLink({href, ...rest}: NavigationLinkProps) {
     const locale = await getRouteLocale();
-    const localizedHref = href === '/' ? `/${locale}` : `/${locale}${href}`;
+    const localizedHref = localizePath(href, locale);
     return <NextLink href={localizedHref} {...rest} />;
 }

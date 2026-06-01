@@ -6,7 +6,7 @@ import {getTopCollections} from '@/lib/vendure/cached';
 
 export async function FeaturedProducts() {
     const locale = await getRouteLocale();
-    const collections = (await getTopCollections(locale)).slice(0, 6);
+    const collections = await getTopCollections(locale);
 
     return (
         <section className="py-16 md:py-24 bg-background">
