@@ -137,3 +137,30 @@
 .animate-fade-up {
   animation: fade-up 0.4s ease-out both;
 }
+
+@keyframes hero-carousel-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - var(--hero-carousel-gap-half)));
+  }
+}
+
+.hero-carousel-track {
+  --hero-carousel-gap-half: 0.5rem;
+  animation: hero-carousel-scroll 36s linear infinite;
+}
+
+@media (min-width: 768px) {
+  .hero-carousel-track {
+    --hero-carousel-gap-half: 0.75rem;
+    animation-duration: 44s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-carousel-track {
+    animation: none;
+  }
+}
