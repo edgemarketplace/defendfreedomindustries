@@ -39,8 +39,8 @@ export async function HeroSection() {
             </div>
 
             {/* Keep the text readable over the auto-scrolling image carousel. */}
-            <div className="absolute inset-0 bg-background/75 backdrop-blur-[1px]" />
-            <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/70 to-background/90" />
+            <div className="absolute inset-0 bg-background/45 backdrop-blur-[1px]" />
+            <div className="absolute inset-0 bg-gradient-to-br from-background/75 via-background/40 to-background/65" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,var(--color-primary)/20,transparent)]" />
 
             <div className="container relative mx-auto px-4 py-28 md:py-40 lg:py-48">

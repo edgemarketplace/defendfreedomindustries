@@ -1,60 +1,61 @@
-import {ProductCarousel} from "@/components/commerce/product-carousel";
+import Image from "next/image";
 import {getRouteLocale} from "@/i18n/server";
-import {cacheLife, cacheTag} from "next/cache";
-import {getActiveCurrencyCode} from '@/lib/currency-server';
-import {query} from "@/lib/vendure/api";
-import {GetCollectionProductsQuery} from "@/lib/vendure/queries";
 import { Link } from '@/i18n/navigation';
 import {ArrowRight} from "lucide-react";
-import {getTranslations} from 'next-intl/server';
-
-async function getFeaturedCollectionProducts(currencyCode: string) {
-    'use cache'
-    cacheLife('days')
-
-    const locale = await getRouteLocale();
-    cacheTag(`featured-${locale}-${currencyCode}`);
-    cacheTag('products');
-
-    // Fetch featured products from a specific collection
-    // Replace 'featured' with your actual collection slug
-    const result = await query(GetCollectionProductsQuery, {
-        slug: "electronics",
-        input: {
-            collectionSlug: "electronics",
-            take: 12,
-            skip: 0,
-            groupByProduct: true
-        }
-    }, {languageCode: locale, currencyCode});
-
-    return result.data.search.items;
-}
-
+import {getTopCollections} from '@/lib/vendure/cached';
 
 export async function FeaturedProducts() {
     const locale = await getRouteLocale();
-    const currencyCode = await getActiveCurrencyCode();
-    const t = await getTranslations({locale, namespace: 'Product'});
-    const products = await getFeaturedCollectionProducts(currencyCode);
+    const collections = (await getTopCollections(locale)).slice(0, 6);
 
     return (
-        <div>
-            <ProductCarousel
-                title={t('featuredProducts')}
-                products={products}
-            />
-            <div className="container mx-auto px-4 -mt-6 mb-8">
-                <div className="flex justify-center">
-                    <Link
-                        href="/search"
-                        className="group inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-4 transition-colors"
-                    >
-                        {t('viewAllProducts')}
-                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                    </Link>
+        <section className="py-16 md:py-24 bg-background">
+            <div className="container mx-auto px-4">
+                <div className="mb-10 flex flex-col gap-3 text-center md:mb-12">
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+                        Collections
+                    </h2>
+                    <p className="mx-auto max-w-2xl text-muted-foreground">
+                        Shop by organization and find the gear made for your team.
+                    </p>
+                </div>
+
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    {collections.map((collection) => {
+                        const image = collection.featuredAsset ?? collection.assets[0];
+
+                        return (
+                            <Link
+                                key={collection.id}
+                                href={`/collection/${collection.slug}`}
+                                className="group relative min-h-64 overflow-hidden rounded-2xl border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                            >
+                                {image ? (
+                                    <Image
+                                        src={image.source}
+                                        alt={collection.name}
+                                        fill
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                ) : (
+                                    <div className="absolute inset-0 bg-gradient-to-br from-muted via-muted/70 to-primary/20" />
+                                )}
+                                <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/35 to-transparent" />
+                                <div className="absolute inset-x-0 bottom-0 p-6">
+                                    <h3 className="text-2xl font-bold tracking-tight text-foreground">
+                                        {collection.name}
+                                    </h3>
+                                    <div className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors group-hover:underline underline-offset-4">
+                                        Shop collection
+                                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                                    </div>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
