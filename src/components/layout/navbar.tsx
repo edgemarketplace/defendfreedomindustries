@@ -1,7 +1,3 @@
-'use client';
-
-import {useState, useEffect, useCallback} from 'react';
-import Image from 'next/image';
 import {Link} from '@/i18n/navigation';
 import {NavbarCollections} from '@/components/layout/navbar/navbar-collections';
 import {NavbarCart} from '@/components/layout/navbar/navbar-cart';
@@ -13,36 +9,12 @@ import {NavbarUserSkeleton} from '@/components/shared/skeletons/navbar-user-skel
 import {SearchInputSkeleton} from '@/components/shared/skeletons/search-input-skeleton';
 
 export function Navbar() {
-    const [visible, setVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
-
-    const handleScroll = useCallback(() => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY < 0) return;
-        // Show at top, hide when scrolling down, show when scrolling up
-        if (currentScrollY < 60) {
-            setVisible(true);
-        } else if (currentScrollY > lastScrollY) {
-            setVisible(false);
-        } else {
-            setVisible(true);
-        }
-        setLastScrollY(currentScrollY);
-    }, [lastScrollY]);
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll, {passive: true});
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleScroll]);
-
     return (
         <>
-            {/* Spacer to prevent content jump when header becomes fixed */}
             <div className="h-16" />
             <header
-                className={`fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md bg-background/80 transition-transform duration-300 ${
-                    visible ? 'translate-y-0' : '-translate-y-full'
-                }`}
+                id="main-header"
+                className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md bg-background/80 transition-transform duration-300"
             >
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-16">
