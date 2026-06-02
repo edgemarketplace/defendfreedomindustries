@@ -6,11 +6,8 @@ import {Button} from '@/components/ui/button';
 import {Alert, AlertDescription} from '@/components/ui/alert';
 import {Loader2, AlertCircle} from 'lucide-react';
 import {Elements, PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js';
-import {loadStripe, type StripeElementsOptions} from '@stripe/stripe-js';
+import {loadStripe, type StripeElementsOptions, type Stripe} from '@stripe/stripe-js';
 import {createStripePaymentIntent, completeStripeOrder} from './actions';
-
-const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null;
 
 interface StripePaymentPanelProps {
     orderCode: string;
@@ -18,25 +15,39 @@ interface StripePaymentPanelProps {
 }
 
 export default function StripePaymentPanel({orderCode, disabled}: StripePaymentPanelProps) {
+    const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null);
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loadingIntent, setLoadingIntent] = useState(true);
 
     useEffect(() => {
-        if (!stripePublishableKey) {
-            setLoadingIntent(false);
-            return;
-        }
-
         let cancelled = false;
 
-        async function loadIntent() {
+        async function loadStripeConfigAndIntent() {
             setLoadingIntent(true);
             setError(null);
             try {
-                const result = await createStripePaymentIntent();
+                const configResponse = await fetch('/api/stripe-config', {cache: 'no-store'});
+                if (!configResponse.ok) {
+                    throw new Error('Unable to load Stripe configuration.');
+                }
+
+                const config: {publishableKey: string | null} = await configResponse.json();
+                if (!config.publishableKey) {
+                    if (!cancelled) {
+                        setStripePromise(null);
+                    }
+                    return;
+                }
+
+                const [stripe, intent] = await Promise.all([
+                    loadStripe(config.publishableKey),
+                    createStripePaymentIntent(),
+                ]);
+
                 if (!cancelled) {
-                    setClientSecret(result.clientSecret);
+                    setStripePromise(Promise.resolve(stripe));
+                    setClientSecret(intent.clientSecret);
                 }
             } catch (err) {
                 if (!cancelled) {
@@ -49,7 +60,7 @@ export default function StripePaymentPanel({orderCode, disabled}: StripePaymentP
             }
         }
 
-        loadIntent();
+        loadStripeConfigAndIntent();
 
         return () => {
             cancelled = true;
@@ -65,17 +76,6 @@ export default function StripePaymentPanel({orderCode, disabled}: StripePaymentP
             },
         };
     }, [clientSecret]);
-
-    if (!stripePublishableKey) {
-        return (
-            <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                    Stripe checkout is not configured. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY in Vercel to enable card payments.
-                </AlertDescription>
-            </Alert>
-        );
-    }
 
     if (loadingIntent) {
         return (
@@ -95,7 +95,16 @@ export default function StripePaymentPanel({orderCode, disabled}: StripePaymentP
         );
     }
 
-    if (!stripePromise || !options) return null;
+    if (!stripePromise || !options) {
+        return (
+            <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                    Card payments are temporarily unavailable. Please contact us to complete your order.
+                </AlertDescription>
+            </Alert>
+        );
+    }
 
     return (
         <Elements stripe={stripePromise} options={options}>
