@@ -1,7 +1,5 @@
 import type {Metadata, Viewport} from "next";
-import {locale as rootLocale} from "next/root-params";
 import {hasLocale, NextIntlClientProvider} from "next-intl";
-import {Geist, Geist_Mono} from "next/font/google";
 import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {routing} from "@/i18n/routing";
@@ -10,19 +8,8 @@ import {getRouteLocale} from "@/i18n/server";
 import {Toaster} from "@/components/ui/sonner";
 import {Navbar} from "@/components/layout/navbar";
 import {Footer} from "@/components/layout/footer";
-import {ThemeProvider} from "@/components/providers/theme-provider";
 import {SITE_NAME, SITE_URL} from "@/lib/metadata";
 import "./globals.css";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 export function generateStaticParams() {
     return routing.locales.map((locale) => ({locale}));
@@ -59,11 +46,6 @@ export async function generateMetadata(): Promise<Metadata> {
                 "max-snippet": -1,
             },
         },
-        alternates: {
-            languages: Object.fromEntries(
-                routing.locales.map((l) => [l, `/${l}`])
-            ),
-        },
     };
 }
 
@@ -71,14 +53,10 @@ export const viewport: Viewport = {
     width: "device-width",
     initialScale: 1,
     maximumScale: 5,
-    themeColor: [
-        {media: "(prefers-color-scheme: light)", color: "#ffffff"},
-        {media: "(prefers-color-scheme: dark)", color: "#000000"},
-    ],
 };
 
 export default async function LocaleLayout({children}: {children: React.ReactNode}) {
-    const locale = await rootLocale();
+    const locale = await getRouteLocale();
 
     if (!hasLocale(routing.locales, locale)) {
         notFound();
@@ -88,17 +66,13 @@ export default async function LocaleLayout({children}: {children: React.ReactNod
     const messages = await getMessages({locale});
 
     return (
-        <html lang={locale} data-scroll-behavior="smooth" suppressHydrationWarning>
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
-            >
+        <html lang={locale} suppressHydrationWarning>
+            <body className="antialiased flex flex-col min-h-screen">
                 <NextIntlClientProvider locale={locale} messages={messages}>
-                    <ThemeProvider>
-                        <Navbar />
-                        {children}
-                        <Footer/>
-                        <Toaster/>
-                    </ThemeProvider>
+                    <Navbar />
+                    {children}
+                    <Footer />
+                    <Toaster />
                 </NextIntlClientProvider>
             </body>
         </html>

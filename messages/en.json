@@ -12,9 +12,7 @@
     "signIn": "Sign in",
     "signOut": "Sign out",
     "greeting": "Hi, {name}",
-    "shoppingCart": "Shopping Cart",
-    "switchLanguage": "Switch language",
-    "switchCurrency": "Switch currency"
+    "shoppingCart": "Shopping Cart"
   },
   "Hero": {
     "title": "Defend Freedom",
@@ -24,22 +22,22 @@
     "viewCollections": "View Collections"
   },
   "Home": {
-    "pageTitle": "Your One-Stop Shop",
-    "description": "Discover high-quality products at competitive prices. Shop now for the best deals on electronics, fashion, home goods, and more.",
-    "ogDescription": "Discover high-quality products at competitive prices. Shop now for the best deals.",
+    "pageTitle": "Custom Gear for First Responders & Teams",
+    "description": "Defend Freedom Industries - Custom apparel and gear for first responders, fire departments, sports teams, and community organizations. Quality products, competitive pricing, and fast delivery.",
+    "ogDescription": "Custom apparel and gear for first responders, fire departments, sports teams, and community organizations.",
     "whyShopWithUs": "Why Shop With Us",
     "features": {
       "highQuality": {
         "title": "High Quality",
-        "description": "Premium products carefully selected for you"
+        "description": "Premium products built to last for first responders and teams"
       },
       "bestPrices": {
         "title": "Best Prices",
-        "description": "Competitive pricing on all our products"
+        "description": "Competitive pricing on all our custom gear and apparel"
       },
       "fastDelivery": {
         "title": "Fast Delivery",
-        "description": "Quick and reliable shipping worldwide"
+        "description": "Quick and reliable shipping on every order"
       }
     }
   },
@@ -425,24 +423,19 @@
     "popularCollections": "Popular Collections"
   },
   "Footer": {
-    "description": "A modern, headless e-commerce storefront built with Vendure and Next.js. Fast, flexible, and ready for production.",
+    "description": "Custom apparel and gear for first responders, fire departments, sports teams, and community organizations.",
     "categories": "Categories",
     "customer": "Customer",
     "shopAll": "Shop All",
     "orders": "Orders",
     "account": "Account",
-    "vendure": "Vendure",
-    "github": "GitHub",
-    "documentation": "Documentation",
-    "sourceCode": "Source Code",
-    "copyright": "Vendure Store. All rights reserved.",
-    "poweredBy": "Powered by"
+    "copyright": "Defend Freedom Industries. All rights reserved."
   },
   "Common": {
     "loading": "Loading...",
     "sending": "Sending...",
     "sku": "SKU",
-    "siteDescription": "Shop the best products at {siteName}. Quality products, competitive prices, and fast delivery."
+    "siteDescription": "Custom apparel and gear for first responders, fire departments, sports teams, and community organizations. Quality products, competitive pricing, and fast delivery."
   },
   "Errors": {
     "fieldsRequired": "All fields are required",

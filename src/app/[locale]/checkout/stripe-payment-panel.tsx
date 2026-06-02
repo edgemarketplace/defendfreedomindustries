@@ -9,9 +9,10 @@ import {Elements, PaymentElement, useElements, useStripe} from '@stripe/react-st
 import {loadStripe, type StripeElementsOptions} from '@stripe/stripe-js';
 import {createStripePaymentIntent, completeStripeOrder} from './actions';
 
-const stripePublishableKey =
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ??
-    'pk_test_51TSidFEEYwBLtqTLOXX9wRaBXn49b9r0fyC99kpdzlko2xa4sUQdEVyMd7X7HM14Q1NDK7JgUKYGf9561hNi8MJ900lYx9lxpU';
+const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+if (!stripePublishableKey) {
+    throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable is not set');
+}
 const stripePromise = loadStripe(stripePublishableKey);
 
 interface StripePaymentPanelProps {
