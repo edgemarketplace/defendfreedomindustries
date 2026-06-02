@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import {connection} from 'next/server';
+import {unstable_noStore as noStore} from 'next/cache';
 import {getActiveCurrencyCode} from '@/lib/currency-server';
 import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
@@ -32,6 +33,7 @@ export default async function CheckoutPage() {
     // boundary, Next can serve a prerendered empty-cart checkout shell and later
     // client/server actions fail against the wrong active-order state.
     await connection();
+    noStore();
 
     const locale = await getRouteLocale();
     const currencyCode = await getActiveCurrencyCode();
