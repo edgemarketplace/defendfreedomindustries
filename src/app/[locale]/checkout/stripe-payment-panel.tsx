@@ -9,8 +9,10 @@ import {Elements, PaymentElement, useElements, useStripe} from '@stripe/react-st
 import {loadStripe, type StripeElementsOptions} from '@stripe/stripe-js';
 import {createStripePaymentIntent, completeStripeOrder} from './actions';
 
-const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null;
+const stripePublishableKey =
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ??
+    'pk_test_51TSidFEEYwBLtqTLOXX9wRaBXn49b9r0fyC99kpdzlko2xa4sUQdEVyMd7X7HM14Q1NDK7JgUKYGf9561hNi8MJ900lYx9lxpU';
+const stripePromise = loadStripe(stripePublishableKey);
 
 interface StripePaymentPanelProps {
     orderCode: string;
@@ -26,12 +28,6 @@ export default function StripePaymentPanel({orderCode, disabled}: StripePaymentP
         let cancelled = false;
 
         async function loadIntent() {
-            if (!stripePromise) {
-                setError('Stripe is not configured. NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is missing.');
-                setLoadingIntent(false);
-                return;
-            }
-
             setLoadingIntent(true);
             setError(null);
             try {
