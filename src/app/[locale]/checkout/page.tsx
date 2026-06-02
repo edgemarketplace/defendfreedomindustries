@@ -5,6 +5,7 @@ import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 import {query} from '@/lib/vendure/api';
 import {
+    GetActiveCustomerQuery,
     GetActiveOrderForCheckoutQuery,
     GetCustomerAddressesQuery,
     GetEligiblePaymentMethodsQuery,
@@ -14,8 +15,8 @@ import {redirect} from '@/i18n/navigation';
 import CheckoutFlow from './checkout-flow';
 import {CheckoutProvider} from './checkout-provider';
 import {noIndexRobots} from '@/lib/metadata';
-import {getActiveCustomer} from '@/lib/vendure/actions';
 import {getAvailableCountriesCached} from '@/lib/vendure/cached';
+import {getAuthToken} from '@/lib/auth';
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getRouteLocale();
@@ -35,20 +36,25 @@ export default async function CheckoutPage() {
     const locale = await getRouteLocale();
     const currencyCode = await getActiveCurrencyCode();
     const t = await getTranslations({locale, namespace: 'Checkout'});
-    const customer = await getActiveCustomer();
+    const authToken = await getAuthToken();
+    const customerRes = await query(GetActiveCustomerQuery, undefined, {
+        token: authToken,
+        fetch: {cache: 'no-store'},
+    });
+    const customer = customerRes.data.activeCustomer;
     const isGuest = !customer;
 
     const perSessionFetch = {cache: 'no-store' as const};
 
     const [orderRes, addressesRes, countries, shippingMethodsRes, paymentMethodsRes] =
         await Promise.all([
-            query(GetActiveOrderForCheckoutQuery, {}, {useAuthToken: true, currencyCode, fetch: perSessionFetch}),
+            query(GetActiveOrderForCheckoutQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
             isGuest
                 ? Promise.resolve({ data: { activeCustomer: null } })
-                : query(GetCustomerAddressesQuery, {}, {useAuthToken: true, fetch: perSessionFetch}),
+                : query(GetCustomerAddressesQuery, {}, {token: authToken, fetch: perSessionFetch}),
             getAvailableCountriesCached(locale),
-            query(GetEligibleShippingMethodsQuery, {}, {useAuthToken: true, currencyCode, fetch: perSessionFetch}),
-            query(GetEligiblePaymentMethodsQuery, {}, {useAuthToken: true, currencyCode, fetch: perSessionFetch}),
+            query(GetEligibleShippingMethodsQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
+            query(GetEligiblePaymentMethodsQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
         ]);
 
     const activeOrder = orderRes.data.activeOrder;
