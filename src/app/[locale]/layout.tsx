@@ -1,6 +1,7 @@
 import type {Metadata, Viewport} from "next";
 import {NextIntlClientProvider} from "next-intl";
 import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
+import {Suspense} from "react";
 import {routing} from "@/i18n/routing";
 import {toOgLocale} from "@/i18n/locale-utils";
 import {getRouteLocale} from "@/i18n/server";
@@ -8,6 +9,7 @@ import {Toaster} from "@/components/ui/sonner";
 import {Navbar} from "@/components/layout/navbar";
 import {Footer} from "@/components/layout/footer";
 import {NavbarScrollBehavior} from "@/components/layout/navbar-scroll";
+import {FooterSkeleton} from "@/components/shared/skeletons/footer-skeleton";
 import {SITE_NAME, SITE_URL} from "@/lib/metadata";
 import "./globals.css";
 
@@ -68,7 +70,9 @@ export default async function LocaleLayout({children}: {children: React.ReactNod
                     <Navbar />
                     <NavbarScrollBehavior />
                     {children}
-                    <Footer />
+                    <Suspense fallback={<FooterSkeleton />}>
+                        <Footer />
+                    </Suspense>
                     <Toaster />
                 </NextIntlClientProvider>
             </body>
