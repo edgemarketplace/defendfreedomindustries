@@ -8,8 +8,9 @@ import {
 import {NavbarLink} from '@/components/layout/navbar/navbar-link';
 
 export async function NavbarCollections() {
-    const locale = await getRouteLocale();
+    'use cache';
 
+    const locale = await getRouteLocale();
     const collections = await getTopCollections(locale);
 
     return (
