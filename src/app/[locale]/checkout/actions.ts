@@ -1,6 +1,7 @@
 'use server';
 
 import {mutate} from '@/lib/vendure/api';
+import {getAuthToken} from '@/lib/auth';
 import {
     SetOrderShippingAddressMutation,
     SetOrderBillingAddressMutation,
@@ -13,6 +14,11 @@ import {
 import {revalidatePath, updateTag} from 'next/cache';
 import {redirect} from '@/i18n/navigation';
 import {getLocale} from 'next-intl/server';
+
+const VENDURE_API_URL = process.env.VENDURE_SHOP_API_URL || process.env.NEXT_PUBLIC_VENDURE_SHOP_API_URL;
+const VENDURE_CHANNEL_TOKEN = process.env.VENDURE_CHANNEL_TOKEN || process.env.NEXT_PUBLIC_VENDURE_CHANNEL_TOKEN || '__default_channel__';
+const VENDURE_AUTH_TOKEN_HEADER = process.env.VENDURE_AUTH_TOKEN_HEADER || 'vendure-auth-token';
+const VENDURE_CHANNEL_TOKEN_HEADER = process.env.VENDURE_CHANNEL_TOKEN_HEADER || 'vendure-token';
 
 interface AddressInput {
     fullName: string;
@@ -101,9 +107,77 @@ export async function transitionToArrangingPayment() {
     revalidatePath(`/${locale}/checkout`);
 }
 
+async function mutateVendureRaw<TResult>(query: string): Promise<TResult> {
+    if (!VENDURE_API_URL) {
+        throw new Error('Vendure Shop API URL is not configured');
+    }
+
+    const authToken = await getAuthToken();
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        [VENDURE_CHANNEL_TOKEN_HEADER]: VENDURE_CHANNEL_TOKEN,
+    };
+
+    if (authToken) {
+        headers.Authorization = `Bearer ${authToken}`;
+    }
+
+    const response = await fetch(VENDURE_API_URL, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({query}),
+        cache: 'no-store',
+    });
+
+    if (!response.ok) {
+        throw new Error(`Vendure API request failed with status ${response.status}`);
+    }
+
+    const newToken = response.headers.get(VENDURE_AUTH_TOKEN_HEADER);
+    const result: {data?: TResult; errors?: Array<{message: string}>} = await response.json();
+
+    if (result.errors?.length) {
+        throw new Error(result.errors.map((error) => error.message).join(', '));
+    }
+
+    if (!result.data) {
+        throw new Error('No data returned from Vendure API');
+    }
+
+    // createStripePaymentIntent keeps using the existing auth-token cookie. If Vendure
+    // rotates the token, the shared API helper will persist it on the next normal mutation.
+    void newToken;
+
+    return result.data;
+}
+
+export async function createStripePaymentIntent(): Promise<{clientSecret: string}> {
+    await transitionToArrangingPayment();
+
+    const result = await mutateVendureRaw<{createStripePaymentIntent: string}>(`
+        mutation CreateStripePaymentIntent {
+            createStripePaymentIntent
+        }
+    `);
+
+    return {clientSecret: result.createStripePaymentIntent};
+}
+
+export async function completeStripeOrder(orderCode: string) {
+    updateTag('cart');
+    updateTag('active-order');
+
+    const locale = await getLocale();
+    redirect({href: `/order-confirmation/${orderCode}`, locale});
+}
+
 export async function placeOrder(paymentMethodCode: string) {
     // First, transition the order to ArrangingPayment state
     await transitionToArrangingPayment();
+
+    if (paymentMethodCode.toLowerCase().includes('stripe')) {
+        throw new Error('Stripe payments must be confirmed with the secure card form.');
+    }
 
     // Prepare metadata based on payment method
     const metadata: Record<string, unknown> = {};
