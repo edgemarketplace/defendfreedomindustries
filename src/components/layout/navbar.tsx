@@ -1,4 +1,3 @@
-import {Link} from '@/i18n/navigation';
 import {NavbarCollections} from '@/components/layout/navbar/navbar-collections';
 import {NavbarCart} from '@/components/layout/navbar/navbar-cart';
 import {NavbarUser} from '@/components/layout/navbar/navbar-user';
@@ -22,13 +21,13 @@ export function Navbar() {
                             <Suspense>
                                 <MobileNavWrapper />
                             </Suspense>
-                            <Link href="/" className="text-xl font-bold shrink-0">
+                            <a href="/en" className="text-xl font-bold shrink-0">
                                 <img
                                     src="https://api.defendfreedomindustries.com/assets/source/f5/dfilogo.png"
                                     alt="Defend Freedom Industries"
                                     className="h-8 w-auto"
                                 />
-                            </Link>
+                            </a>
                             <nav className="hidden md:flex items-center gap-6">
                                 <Suspense>
                                     <NavbarCollections />
