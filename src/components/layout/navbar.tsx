@@ -22,7 +22,7 @@ export function Navbar() {
                             <Suspense>
                                 <MobileNavWrapper />
                             </Suspense>
-                            <Link href="/" className="text-xl font-bold">
+                            <Link href="/" className="text-xl font-bold shrink-0">
                                 <img
                                     src="https://api.defendfreedomindustries.com/assets/source/f5/dfilogo.png"
                                     alt="Defend Freedom Industries"

@@ -1,11 +1,10 @@
-import {locale as rootLocale} from 'next/root-params';
 import {routing} from './routing';
 
 /**
- * Safe wrapper around rootLocale() that validates against routing config
- * and falls back to defaultLocale instead of returning undefined.
+ * Returns the current route locale.
+ * Since we only have one locale ('en'), this always returns 'en'.
+ * Kept as a function for consistency with the original codebase.
  */
 export async function getRouteLocale(): Promise<string> {
-    const loc = await rootLocale();
-    return routing.locales.includes(loc as any) ? loc : routing.defaultLocale;
+    return routing.defaultLocale;
 }

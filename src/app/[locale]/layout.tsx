@@ -1,7 +1,6 @@
 import type {Metadata, Viewport} from "next";
-import {hasLocale, NextIntlClientProvider} from "next-intl";
+import {NextIntlClientProvider} from "next-intl";
 import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
-import {notFound} from "next/navigation";
 import {routing} from "@/i18n/routing";
 import {toOgLocale} from "@/i18n/locale-utils";
 import {getRouteLocale} from "@/i18n/server";
@@ -58,10 +57,6 @@ export const viewport: Viewport = {
 
 export default async function LocaleLayout({children}: {children: React.ReactNode}) {
     const locale = await getRouteLocale();
-
-    if (!hasLocale(routing.locales, locale)) {
-        notFound();
-    }
 
     setRequestLocale(locale);
     const messages = await getMessages({locale});
