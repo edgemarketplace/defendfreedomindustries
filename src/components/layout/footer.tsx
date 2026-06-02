@@ -3,8 +3,7 @@ import {cacheLife, cacheTag} from 'next/cache';
 import {getTopCollections} from '@/lib/vendure/cached';
 import {Link} from '@/i18n/navigation';
 import {getTranslations} from 'next-intl/server';
-
-const COPYRIGHT_YEAR = 2026;
+import Image from 'next/image';
 
 async function Copyright() {
     'use cache'
@@ -12,10 +11,11 @@ async function Copyright() {
 
     const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Footer'});
+    const currentYear = new Date().getFullYear();
 
     return (
         <div>
-            &copy; {COPYRIGHT_YEAR} {t('copyright')}
+            &copy; {currentYear} {t('copyright')}
         </div>
     )
 }
@@ -36,9 +36,11 @@ export async function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="md:col-span-1">
                         <Link href="/" className="inline-block mb-4">
-                            <img
+                            <Image
                                 src="https://api.defendfreedomindustries.com/assets/source/f5/dfilogo.png"
                                 alt="Defend Freedom Industries"
+                                width={160}
+                                height={32}
                                 className="h-8 w-auto"
                             />
                         </Link>

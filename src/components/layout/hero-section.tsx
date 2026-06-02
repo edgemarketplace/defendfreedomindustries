@@ -2,6 +2,7 @@ import {Button} from "@/components/ui/button";
 import {Link} from '@/i18n/navigation';
 import {getTranslations} from 'next-intl/server';
 import {getRouteLocale} from '@/i18n/server';
+import Image from 'next/image';
 
 const heroImages = [
     "https://api.defendfreedomindustries.com/assets/source/f2/20231005_025659790_ios.jpeg",
@@ -24,11 +25,13 @@ export async function HeroSection() {
                             key={`${src}-${index}`}
                             className="relative h-full w-[78vw] shrink-0 overflow-hidden rounded-3xl md:w-[46vw] lg:w-[34vw]"
                         >
-                            <img
+                            <Image
                                 src={src}
                                 alt=""
-                                loading={index < 2 ? "eager" : "lazy"}
-                                className="object-cover absolute inset-0 w-full h-full"
+                                fill
+                                priority={index < 2}
+                                sizes="(min-width: 1024px) 34vw, (min-width: 768px) 46vw, 78vw"
+                                className="object-cover"
                             />
                         </div>
                     ))}
