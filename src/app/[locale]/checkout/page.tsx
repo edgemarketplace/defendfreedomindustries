@@ -1,4 +1,5 @@
 import type {Metadata} from 'next';
+import {connection} from 'next/server';
 import {getActiveCurrencyCode} from '@/lib/currency-server';
 import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
@@ -26,6 +27,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CheckoutPage() {
+    // Checkout depends on per-request Vendure session cookies. Without this
+    // boundary, Next can serve a prerendered empty-cart checkout shell and later
+    // client/server actions fail against the wrong active-order state.
+    await connection();
+
     const locale = await getRouteLocale();
     const currencyCode = await getActiveCurrencyCode();
     const t = await getTranslations({locale, namespace: 'Checkout'});
