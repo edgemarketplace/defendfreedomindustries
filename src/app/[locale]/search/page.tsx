@@ -35,7 +35,7 @@ export default async function SearchPage({searchParams}: PageProps<'/[locale]/se
                 <SearchTerm searchParams={searchParams}/>
             </Suspense>
             <Suspense fallback={<SearchResultsSkeleton />}>
-                <SearchResults />
+                <SearchResults searchParams={searchParams} />
             </Suspense>
         </div>
     );

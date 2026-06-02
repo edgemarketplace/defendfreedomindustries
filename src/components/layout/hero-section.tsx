@@ -18,12 +18,12 @@ export async function HeroSection() {
 
     return (
         <section className="relative overflow-hidden bg-background">
-            <div className="absolute inset-0" aria-hidden="true">
+            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 <div className="hero-carousel-track flex h-full w-max gap-4 py-6 md:gap-6 md:py-10">
                     {carouselImages.map((src, index) => (
                         <div
                             key={`${src}-${index}`}
-                            className="relative h-full w-[78vw] shrink-0 overflow-hidden rounded-3xl md:w-[46vw] lg:w-[34vw]"
+                            className="relative h-full w-[78vw] shrink-0 overflow-hidden rounded-3xl md:w-[46vw] lg:w-[34vw] transform-gpu"
                         >
                             <Image
                                 src={src}
@@ -38,7 +38,7 @@ export async function HeroSection() {
                 </div>
             </div>
 
-            <div className="absolute inset-0 bg-background/45 backdrop-blur-[1px]" />
+            <div className="absolute inset-0 bg-background/45" />
             <div className="absolute inset-0 bg-gradient-to-br from-background/75 via-background/40 to-background/65" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,var(--color-primary)/20,transparent)]" />
 

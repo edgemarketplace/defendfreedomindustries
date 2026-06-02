@@ -140,16 +140,20 @@
 
 @keyframes hero-carousel-scroll {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(calc(-50% - var(--hero-carousel-gap-half)));
+    transform: translate3d(calc(-50% - var(--hero-carousel-gap-half)), 0, 0);
   }
 }
 
 .hero-carousel-track {
   --hero-carousel-gap-half: 0.5rem;
   animation: hero-carousel-scroll 36s linear infinite;
+  backface-visibility: hidden;
+  contain: layout paint;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 @media (min-width: 768px) {
