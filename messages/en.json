@@ -12,7 +12,8 @@
     "signIn": "Sign in",
     "signOut": "Sign out",
     "greeting": "Hi, {name}",
-    "shoppingCart": "Shopping Cart"
+    "shoppingCart": "Shopping Cart",
+    "checkout": "Checkout"
   },
   "Hero": {
     "title": "Defend Freedom",

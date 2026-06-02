@@ -10,10 +10,7 @@ import {loadStripe, type StripeElementsOptions} from '@stripe/stripe-js';
 import {createStripePaymentIntent, completeStripeOrder} from './actions';
 
 const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-if (!stripePublishableKey) {
-    throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable is not set');
-}
-const stripePromise = loadStripe(stripePublishableKey);
+const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null;
 
 interface StripePaymentPanelProps {
     orderCode: string;
@@ -26,6 +23,11 @@ export default function StripePaymentPanel({orderCode, disabled}: StripePaymentP
     const [loadingIntent, setLoadingIntent] = useState(true);
 
     useEffect(() => {
+        if (!stripePublishableKey) {
+            setLoadingIntent(false);
+            return;
+        }
+
         let cancelled = false;
 
         async function loadIntent() {
@@ -63,6 +65,17 @@ export default function StripePaymentPanel({orderCode, disabled}: StripePaymentP
             },
         };
     }, [clientSecret]);
+
+    if (!stripePublishableKey) {
+        return (
+            <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                    Stripe checkout is not configured. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY in Vercel to enable card payments.
+                </AlertDescription>
+            </Alert>
+        );
+    }
 
     if (loadingIntent) {
         return (

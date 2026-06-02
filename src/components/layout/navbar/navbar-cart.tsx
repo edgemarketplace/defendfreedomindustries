@@ -18,5 +18,5 @@ export async function NavbarCart() {
         // User not authenticated or no active order
     }
 
-    return <CartIcon cartItemCount={cartItemCount} />;
+    return <CartIcon cartItemCount={cartItemCount} showCheckout />;
 }

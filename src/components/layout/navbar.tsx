@@ -40,7 +40,16 @@ export function Navbar() {
                                     <SearchInput />
                                 </Suspense>
                             </div>
-                            <Suspense>
+                            <Suspense fallback={
+                                <div className="flex items-center gap-2">
+                                    <a href="/en/cart" className="relative inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground" aria-label="Shopping Cart">
+                                        <span aria-hidden="true">🛒</span>
+                                    </a>
+                                    <a href="/en/checkout" className="hidden sm:inline-flex h-9 items-center justify-center rounded-md bg-primary px-3 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90">
+                                        Checkout
+                                    </a>
+                                </div>
+                            }>
                                 <NavbarCart />
                             </Suspense>
                             <Suspense fallback={<NavbarUserSkeleton />}>
