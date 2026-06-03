@@ -16,29 +16,77 @@
     "checkout": "Checkout"
   },
   "Hero": {
+    "eyebrow": "Custom apparel built for crews",
     "title": "Defend Freedom",
     "titleHighlight": "Industries",
-    "subtitle": "Custom Gear for First Responders, Teams, and Communities",
+    "subtitle": "Duty-ready shirts, hats, hoodies, and custom team gear for first responders, departments, and the communities that stand behind them.",
     "shopNow": "Shop Now",
-    "viewCollections": "View Collections"
+    "viewCollections": "View Collections",
+    "highlights": {
+      "firstResponder": "First responder focused",
+      "customWork": "Custom print and embroidery",
+      "reliableDelivery": "Built for repeat team orders"
+    }
   },
   "Home": {
     "pageTitle": "Custom Gear for First Responders & Teams",
-    "description": "Defend Freedom Industries - Custom apparel and gear for first responders, fire departments, sports teams, and community organizations. Quality products, competitive pricing, and fast delivery.",
-    "ogDescription": "Custom apparel and gear for first responders, fire departments, sports teams, and community organizations.",
+    "description": "Defend Freedom Industries creates custom apparel and gear for first responders, departments, teams, and community organizations.",
+    "ogDescription": "Custom apparel and gear for first responders, departments, teams, and community organizations.",
+    "collections": {
+      "eyebrow": "Shop the lineup",
+      "title": "Gear for the department, the shift, and the weekend.",
+      "description": "Browse collections made for everyday wear, custom department orders, fundraisers, and team outfitting.",
+      "shopCollection": "Shop collection"
+    },
+    "audiences": {
+      "dutyShirts": {
+        "title": "Duty shirts and job shirts",
+        "description": "Clean, dependable apparel for crews that need gear to look sharp and hold up."
+      },
+      "teamStores": {
+        "title": "Team and department stores",
+        "description": "Organized collections for departments, schools, squads, and community groups."
+      },
+      "bulkOrders": {
+        "title": "Bulk custom orders",
+        "description": "Straightforward ordering for hats, hoodies, tees, and recurring team needs."
+      }
+    },
+    "customOrders": {
+      "eyebrow": "Custom orders",
+      "title": "From design idea to finished gear without the runaround.",
+      "description": "Whether you need a small batch for the crew or a larger run for an entire organization, DFI keeps the process clear, practical, and focused on gear people will actually wear.",
+      "steps": {
+        "design": {
+          "title": "Send the idea",
+          "description": "Share your logo, department, event, or reference and we will shape it into a clean apparel direction."
+        },
+        "approve": {
+          "title": "Approve the details",
+          "description": "Review product choices, placement, sizes, and pricing before anything moves forward."
+        },
+        "deliver": {
+          "title": "Gear up the crew",
+          "description": "Orders are produced, packed, and sent out with the care a team order deserves."
+        }
+      }
+    },
+    "proof": {
+      "eyebrow": "Why DFI"
+    },
     "whyShopWithUs": "Why Shop With Us",
     "features": {
       "highQuality": {
-        "title": "High Quality",
-        "description": "Premium products built to last for first responders and teams"
+        "title": "Quality blanks",
+        "description": "Apparel selected for comfort, fit, durability, and clean decoration."
       },
       "bestPrices": {
-        "title": "Best Prices",
-        "description": "Competitive pricing on all our custom gear and apparel"
+        "title": "Clear pricing",
+        "description": "Competitive pricing for individual purchases, custom batches, and larger orders."
       },
       "fastDelivery": {
-        "title": "Fast Delivery",
-        "description": "Quick and reliable shipping on every order"
+        "title": "Reliable fulfillment",
+        "description": "Straightforward timelines and practical communication from order to delivery."
       }
     }
   },
@@ -427,6 +475,7 @@
     "description": "Custom apparel and gear for first responders, fire departments, sports teams, and community organizations.",
     "categories": "Categories",
     "customer": "Customer",
+    "contact": "Contact",
     "shopAll": "Shop All",
     "orders": "Orders",
     "account": "Account",

@@ -18,29 +18,77 @@
     "switchCurrency": "Währung wechseln"
   },
   "Hero": {
-    "title": "Entdecke hochwertige",
-    "titleHighlight": "Produkte",
-    "subtitle": "Hochwertige Produkte zu außergewöhnlichen Preisen. Kostenloser Versand ab 50 €.",
+    "eyebrow": "Custom-Apparel für Teams",
+    "title": "Defend Freedom",
+    "titleHighlight": "Industries",
+    "subtitle": "Einsatzbereite Shirts, Caps, Hoodies und Team-Ausstattung für Ersthelfer, Abteilungen und Gemeinschaften.",
     "shopNow": "Jetzt einkaufen",
-    "viewCollections": "Kategorien ansehen"
+    "viewCollections": "Kategorien ansehen",
+    "highlights": {
+      "firstResponder": "Fokus auf Ersthelfer",
+      "customWork": "Druck und Stick nach Wunsch",
+      "reliableDelivery": "Für wiederkehrende Team-Bestellungen"
+    }
   },
   "Home": {
-    "pageTitle": "Ihr One-Stop-Shop",
-    "description": "Entdecken Sie hochwertige Produkte zu wettbewerbsfähigen Preisen. Jetzt einkaufen und die besten Angebote für Elektronik, Mode, Haushaltswaren und mehr finden.",
-    "ogDescription": "Entdecken Sie hochwertige Produkte zu wettbewerbsfähigen Preisen. Jetzt die besten Angebote sichern.",
+    "pageTitle": "Custom Gear für Ersthelfer und Teams",
+    "description": "Defend Freedom Industries erstellt Custom-Apparel und Gear für Ersthelfer, Abteilungen, Teams und Gemeinschaftsorganisationen.",
+    "ogDescription": "Custom-Apparel und Gear für Ersthelfer, Abteilungen, Teams und Gemeinschaftsorganisationen.",
+    "collections": {
+      "eyebrow": "Sortiment entdecken",
+      "title": "Gear für die Abteilung, die Schicht und das Wochenende.",
+      "description": "Entdecken Sie Kollektionen für Alltag, Abteilungsbestellungen, Fundraiser und Team-Ausstattung.",
+      "shopCollection": "Kollektion ansehen"
+    },
+    "audiences": {
+      "dutyShirts": {
+        "title": "Duty Shirts und Job Shirts",
+        "description": "Saubere, verlässliche Kleidung für Crews, die gut aussehen und lange halten soll."
+      },
+      "teamStores": {
+        "title": "Team- und Abteilungsshops",
+        "description": "Organisierte Kollektionen für Abteilungen, Schulen, Einheiten und Gruppen."
+      },
+      "bulkOrders": {
+        "title": "Custom-Bestellungen in Stückzahl",
+        "description": "Einfache Bestellung für Caps, Hoodies, Shirts und wiederkehrende Team-Bedarfe."
+      }
+    },
+    "customOrders": {
+      "eyebrow": "Custom Orders",
+      "title": "Von der Idee bis zum fertigen Gear ohne Umwege.",
+      "description": "Ob kleine Crew-Bestellung oder größere Auflage für eine Organisation: DFI hält den Prozess klar, praktisch und auf tragbare Qualität ausgerichtet.",
+      "steps": {
+        "design": {
+          "title": "Idee senden",
+          "description": "Logo, Abteilung, Event oder Referenz teilen und wir formen daraus eine klare Apparel-Richtung."
+        },
+        "approve": {
+          "title": "Details freigeben",
+          "description": "Produkte, Platzierung, Größen und Preise prüfen, bevor die Bestellung weitergeht."
+        },
+        "deliver": {
+          "title": "Crew ausstatten",
+          "description": "Bestellungen werden produziert, verpackt und mit der Sorgfalt einer Team-Bestellung versendet."
+        }
+      }
+    },
+    "proof": {
+      "eyebrow": "Warum DFI"
+    },
     "whyShopWithUs": "Warum bei uns einkaufen",
     "features": {
       "highQuality": {
-        "title": "Hohe Qualität",
-        "description": "Sorgfältig ausgewählte Premiumprodukte für Sie"
+        "title": "Hochwertige Basics",
+        "description": "Apparel ausgewählt für Komfort, Passform, Haltbarkeit und saubere Veredelung."
       },
       "bestPrices": {
-        "title": "Beste Preise",
-        "description": "Wettbewerbsfähige Preise für alle unsere Produkte"
+        "title": "Klare Preise",
+        "description": "Faire Preise für Einzelkäufe, Custom-Batches und größere Bestellungen."
       },
       "fastDelivery": {
-        "title": "Schnelle Lieferung",
-        "description": "Schneller und zuverlässiger Versand weltweit"
+        "title": "Verlässliche Abwicklung",
+        "description": "Klare Zeitpläne und praktische Kommunikation von Bestellung bis Lieferung."
       }
     }
   },
@@ -426,9 +474,10 @@
     "popularCollections": "Beliebte Kategorien"
   },
   "Footer": {
-    "description": "Ein moderner, Headless-E-Commerce-Shop, erstellt mit Vendure und Next.js. Schnell, flexibel und produktionsbereit.",
+    "description": "Custom-Apparel und Gear für Ersthelfer, Feuerwehren, Sportteams und Gemeinschaftsorganisationen.",
     "categories": "Kategorien",
     "customer": "Kunde",
+    "contact": "Kontakt",
     "shopAll": "Alle Produkte",
     "orders": "Bestellungen",
     "account": "Konto",
@@ -436,7 +485,7 @@
     "github": "GitHub",
     "documentation": "Dokumentation",
     "sourceCode": "Quellcode",
-    "copyright": "Vendure Store. Alle Rechte vorbehalten.",
+    "copyright": "Defend Freedom Industries. Alle Rechte vorbehalten.",
     "poweredBy": "Powered by"
   },
   "Common": {

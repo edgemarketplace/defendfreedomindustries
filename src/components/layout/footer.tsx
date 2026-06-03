@@ -4,6 +4,7 @@ import {getTopCollections} from '@/lib/vendure/cached';
 import {Link} from '@/i18n/navigation';
 import {getTranslations} from 'next-intl/server';
 import Image from 'next/image';
+import {MapPin, Mail, Phone} from 'lucide-react';
 
 async function Copyright() {
     'use cache'
@@ -31,7 +32,7 @@ export async function Footer() {
     const collections = await getTopCollections(locale);
 
     return (
-        <footer className="border-t border-border mt-auto">
+        <footer className="border-t border-border mt-auto bg-muted/30">
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="md:col-span-1">
@@ -96,12 +97,23 @@ export async function Footer() {
                     </div>
 
                     <div>
-                        <p className="text-sm font-semibold mb-4">Contact</p>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li>
+                        <p className="text-sm font-semibold mb-4">{t('contact')}</p>
+                        <ul className="space-y-3 text-sm text-muted-foreground">
+                            <li className="flex gap-2">
+                                <Mail className="mt-0.5 size-4 shrink-0 text-primary" />
                                 <a href="mailto:orders@defendfreedomindustries.com" className="hover:text-foreground transition-colors">
                                     orders@defendfreedomindustries.com
                                 </a>
+                            </li>
+                            <li className="flex gap-2">
+                                <Phone className="mt-0.5 size-4 shrink-0 text-primary" />
+                                <a href="tel:+19283026668" className="hover:text-foreground transition-colors">
+                                    (928) 302-6668
+                                </a>
+                            </li>
+                            <li className="flex gap-2">
+                                <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
+                                <span>Henderson, NV</span>
                             </li>
                         </ul>
                     </div>

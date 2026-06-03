@@ -3,6 +3,7 @@ import {Link} from '@/i18n/navigation';
 import {getTranslations} from 'next-intl/server';
 import {getRouteLocale} from '@/i18n/server';
 import Image from 'next/image';
+import {ArrowRight, ShieldCheck, Sparkles, Truck} from 'lucide-react';
 
 const heroImages = [
     "https://api.defendfreedomindustries.com/assets/source/f2/20231005_025659790_ios.jpeg",
@@ -15,15 +16,20 @@ export async function HeroSection() {
     const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Hero'});
     const carouselImages = [...heroImages, ...heroImages];
+    const highlights = [
+        {icon: ShieldCheck, label: t('highlights.firstResponder')},
+        {icon: Sparkles, label: t('highlights.customWork')},
+        {icon: Truck, label: t('highlights.reliableDelivery')},
+    ];
 
     return (
-        <section className="relative overflow-hidden bg-background">
+        <section className="relative min-h-[66svh] overflow-hidden bg-background">
             <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div className="hero-carousel-track flex h-full w-max gap-4 py-6 md:gap-6 md:py-10">
+                <div className="hero-carousel-track flex h-full w-max gap-3 py-5 md:gap-5 md:py-8">
                     {carouselImages.map((src, index) => (
                         <div
                             key={`${src}-${index}`}
-                            className="relative h-full w-[78vw] shrink-0 overflow-hidden rounded-3xl md:w-[46vw] lg:w-[34vw] transform-gpu"
+                            className="relative h-full w-[78vw] shrink-0 overflow-hidden rounded-[8px] md:w-[46vw] lg:w-[32vw] transform-gpu"
                         >
                             <Image
                                 src={src}
@@ -38,29 +44,42 @@ export async function HeroSection() {
                 </div>
             </div>
 
-            <div className="absolute inset-0 bg-background/45" />
-            <div className="absolute inset-0 bg-gradient-to-br from-background/75 via-background/40 to-background/65" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,var(--color-primary)/20,transparent)]" />
+            <div className="absolute inset-0 bg-background/60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/82 to-background/35" />
+            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
 
-            <div className="container relative mx-auto px-4 py-28 md:py-40 lg:py-48">
-                <div className="max-w-4xl mx-auto text-center space-y-8">
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight animate-in fade-in slide-in-from-top-4 duration-700 fill-mode-backwards">
+            <div className="container relative mx-auto flex min-h-[66svh] items-center px-4 py-12 md:py-16">
+                <div className="max-w-3xl space-y-5">
+                    <div className="inline-flex items-center gap-2 rounded-[8px] border border-border bg-background/85 px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm backdrop-blur">
+                        <ShieldCheck className="size-4 text-primary" />
+                        {t('eyebrow')}
+                    </div>
+                    <h1 className="text-4xl font-bold leading-none tracking-tight text-balance md:text-5xl lg:text-6xl animate-in fade-in slide-in-from-top-4 duration-700 fill-mode-backwards">
                         {t('title')}{" "}
                         <span className="text-primary">{t('titleHighlight')}</span>
                     </h1>
-                    <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150 fill-mode-backwards">
+                    <p className="max-w-2xl text-base leading-7 text-muted-foreground md:text-lg md:leading-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150 fill-mode-backwards">
                         {t('subtitle')}
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-backwards">
-                        <Button render={<Link href="/search" />} nativeButton={false} size="lg" className="min-w-[200px] text-base">
+                    <div className="flex flex-col gap-3 pt-1 sm:flex-row animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-backwards">
+                        <Button render={<Link href="/search" />} nativeButton={false} size="lg" className="h-10 min-w-44 px-4 text-base">
                             {t('shopNow')}
+                            <ArrowRight className="size-4" />
                         </Button>
                         <a
                             href="#collections"
-                            className="inline-flex shrink-0 items-center justify-center rounded-md border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px border-border bg-background shadow-xs hover:bg-muted hover:text-foreground h-10 gap-1.5 px-2.5 min-w-[200px] text-base"
+                            className="inline-flex h-10 min-w-44 shrink-0 items-center justify-center rounded-md border border-border bg-background px-4 text-base font-medium shadow-xs transition-all hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                         >
                             {t('viewCollections')}
                         </a>
+                    </div>
+                    <div className="grid max-w-2xl gap-3 pt-3 sm:grid-cols-3">
+                        {highlights.map((highlight) => (
+                            <div key={highlight.label} className="flex items-center gap-2 rounded-[8px] border bg-background/85 px-3 py-3 text-sm font-medium shadow-sm backdrop-blur">
+                                <highlight.icon className="size-4 text-primary" />
+                                <span>{highlight.label}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

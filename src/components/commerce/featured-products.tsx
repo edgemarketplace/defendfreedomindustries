@@ -3,20 +3,25 @@ import {getRouteLocale} from "@/i18n/server";
 import { Link } from '@/i18n/navigation';
 import {ArrowRight} from "lucide-react";
 import {getTopCollections} from '@/lib/vendure/cached';
+import {getTranslations} from 'next-intl/server';
 
 export async function FeaturedProducts() {
     const locale = await getRouteLocale();
+    const t = await getTranslations({locale, namespace: 'Home'});
     const collections = await getTopCollections(locale);
 
     return (
         <section className="py-16 md:py-24 bg-background">
             <div className="container mx-auto px-4">
-                <div className="mb-10 flex flex-col gap-3 text-center md:mb-12">
-                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-                        Collections
+                <div className="mb-10 flex flex-col gap-3 md:mb-12">
+                    <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+                        {t('collections.eyebrow')}
+                    </p>
+                    <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-balance md:text-4xl">
+                        {t('collections.title')}
                     </h2>
-                    <p className="mx-auto max-w-2xl text-muted-foreground">
-                        Shop by organization and find the gear made for your team.
+                    <p className="max-w-2xl text-muted-foreground leading-7">
+                        {t('collections.description')}
                     </p>
                 </div>
 
@@ -28,7 +33,7 @@ export async function FeaturedProducts() {
                             <Link
                                 key={collection.id}
                                 href={`/collection/${collection.slug}`}
-                                className="group relative min-h-64 overflow-hidden rounded-2xl border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                                className="group relative min-h-72 overflow-hidden rounded-[8px] border bg-card shadow-sm transition-all duration-300 hover:shadow-xl"
                             >
                                 {image ? (
                                     <Image
@@ -41,13 +46,13 @@ export async function FeaturedProducts() {
                                 ) : (
                                     <div className="absolute inset-0 bg-gradient-to-br from-muted via-muted/70 to-primary/20" />
                                 )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/35 to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-background/96 via-background/45 to-transparent" />
                                 <div className="absolute inset-x-0 bottom-0 p-6">
                                     <h3 className="text-2xl font-bold tracking-tight text-foreground">
                                         {collection.name}
                                     </h3>
                                     <div className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors group-hover:underline underline-offset-4">
-                                        Shop collection
+                                        {t('collections.shopCollection')}
                                         <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                                     </div>
                                 </div>
