@@ -61,8 +61,12 @@ async function getOrderByCode(code: string) {
     } catch {
         // Hosted payment flows can return the customer without the original storefront auth
         // cookie, so fall back to a public lookup by order code before failing the page.
-        const {data} = await query(GetOrderByCodeQuery, {code});
-        return data.orderByCode;
+        try {
+            const {data} = await query(GetOrderByCodeQuery, {code});
+            return data.orderByCode;
+        } catch {
+            return null;
+        }
     }
 }
 
