@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { notFound } from 'next/navigation';
 import { cacheLife, cacheTag } from 'next/cache';
-import { Truck, RotateCcw, ShieldCheck, Clock } from 'lucide-react';
+import { Palette, ShieldCheck, Clock3, ClipboardCheck } from 'lucide-react';
 import { routing } from '@/i18n/routing';
 import {
     SITE_NAME,
@@ -157,20 +157,20 @@ export default async function ProductDetailPage({params, searchParams}: PageProp
                 <div className="container mx-auto px-4">
                     <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
                         <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
-                            <Truck className="h-4 w-4 text-primary" />
-                            {t('trustBadges.fastShipping')}
+                            <Palette className="h-4 w-4 text-primary" />
+                            {t('trustBadges.customDecoration')}
                         </div>
                         <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
-                            <RotateCcw className="h-4 w-4 text-primary" />
-                            {t('trustBadges.freeReturns')}
+                            <ClipboardCheck className="h-4 w-4 text-primary" />
+                            {t('trustBadges.artApproval')}
                         </div>
                         <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
                             <ShieldCheck className="h-4 w-4 text-primary" />
                             {t('trustBadges.secureCheckout')}
                         </div>
                         <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
-                            <Clock className="h-4 w-4 text-primary" />
-                            {t('trustBadges.guarantee')}
+                            <Clock3 className="h-4 w-4 text-primary" />
+                            {t('trustBadges.reorderSupport')}
                         </div>
                     </div>
                 </div>

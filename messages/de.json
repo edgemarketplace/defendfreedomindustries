@@ -117,28 +117,34 @@
     "browseCollectionAt": "Entdecken Sie unsere {name}-Kollektion bei {siteName}",
     "productCount": "{count, plural, one {# Produkt} other {# Produkte}}",
     "trustBadges": {
-      "fastShipping": "Schneller Versand",
-      "freeReturns": "Kostenlose Rücksendung",
+      "customDecoration": "Bereit für Druck und Stick",
+      "artApproval": "Freigabe vor der Produktion",
       "secureCheckout": "Sicherer Checkout",
-      "guarantee": "30-Tage-Garantie"
+      "reorderSupport": "Einfaches Nachbestellen"
+    },
+    "customOrderSupport": {
+      "title": "Für Crew, Team oder Abteilung bestellen?",
+      "description": "DFI hilft bei Stückzahlen, Logos, Abteilungsshops und wiederkehrenden Team-Bestellungen. Melden Sie sich und wir finden die passende Lösung.",
+      "email": "DFI per E-Mail",
+      "call": "DFI anrufen"
     },
     "faq": {
       "title": "Häufig gestellte Fragen",
       "shipping": {
-        "question": "Welche Versandoptionen bieten Sie an?",
-        "answer": "Wir bieten Standardversand (5–7 Werktage), Expressversand (2–3 Werktage) und Lieferung am nächsten Tag für ausgewählte Gebiete an. Kostenloser Standardversand ist ab einem Bestellwert von 50 € verfügbar."
+        "question": "Können Sie Bestellungen für Abteilungen oder Teams umsetzen?",
+        "answer": "Ja. DFI unterstützt Abteilungsbekleidung, Teamshops, Event-Shirts und wiederkehrende Crew-Bestellungen. Wir arbeiten mit Ihrem Artwork oder helfen bei der Ausarbeitung der Richtung."
       },
       "returns": {
-        "question": "Wie ist Ihre Rückgaberichtlinie?",
-        "answer": "Wir akzeptieren Rücksendungen innerhalb von 30 Tagen nach dem Kauf. Die Artikel müssen unbenutzt und in der Originalverpackung sein. Kontaktieren Sie einfach unser Support-Team, um eine Rücksendung einzuleiten und ein vorfrankiertes Versandetikett zu erhalten."
+        "question": "Wie läuft die Designfreigabe ab?",
+        "answer": "Bei Custom-Bestellungen prüfen Sie Designrichtung, Produktwahl, Platzierung und Preis, bevor die Produktion startet. So ist vorab alles abgestimmt."
       },
       "tracking": {
-        "question": "Wie kann ich meine Bestellung verfolgen?",
-        "answer": "Sobald Ihre Bestellung versendet wurde, erhalten Sie eine E-Mail mit einer Sendungsverfolgungsnummer. Sie können den Status Ihrer Bestellung auch jederzeit einsehen, indem Sie sich in Ihr Konto einloggen und den Bestellverlauf aufrufen."
+        "question": "Können wir später für neue Crew-Mitglieder nachbestellen?",
+        "answer": "Ja. DFI ist auf wiederkehrende Bestellungen ausgelegt, damit Abteilungen und Teams Größen ergänzen oder beliebte Artikel nachbestellen können, ohne von vorn zu beginnen."
       },
       "international": {
-        "question": "Bieten Sie internationalen Versand an?",
-        "answer": "Ja! Wir versenden in über 50 Länder weltweit. Die internationalen Versandkosten und Lieferzeiten variieren je nach Standort. Die genauen Kosten sehen Sie an der Kasse, bevor Sie Ihren Einkauf abschließen."
+        "question": "Was passiert nach der Bestellung?",
+        "answer": "Sie erhalten sofort eine Bestellbestätigung. Bei dekorierten oder abgestimmten Bestellungen meldet sich DFI bei Bedarf zu Artwork, Timing und Fulfillment, bevor die Ware versendet wird."
       }
     }
   },

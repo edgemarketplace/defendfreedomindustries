@@ -7,7 +7,7 @@ import {Button} from '@/components/ui/button';
 import {Label} from '@/components/ui/label';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Separator} from '@/components/ui/separator';
-import {ShoppingCart, CheckCircle2} from 'lucide-react';
+import {ShoppingCart, CheckCircle2, Mail, Phone, Users} from 'lucide-react';
 import {addToCart} from '@/app/[locale]/product/[slug]/actions';
 import {toast} from 'sonner';
 import {Price} from '@/components/commerce/price';
@@ -245,6 +245,40 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
                     {t('sku', {sku: selectedVariant.sku})}
                 </div>
             )}
+
+            <div className="rounded-[8px] border bg-muted/35 p-5">
+                <div className="flex items-start gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-[8px] bg-primary/10 text-primary">
+                        <Users className="size-5" />
+                    </div>
+                    <div className="min-w-0">
+                        <h2 className="text-base font-semibold">{t('customOrderSupport.title')}</h2>
+                        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                            {t('customOrderSupport.description')}
+                        </p>
+                    </div>
+                </div>
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                    <Button
+                        render={<a href="mailto:orders@defendfreedomindustries.com" />}
+                        nativeButton={false}
+                        variant="outline"
+                        className="h-10 flex-1"
+                    >
+                        <Mail className="mr-2 size-4" />
+                        {t('customOrderSupport.email')}
+                    </Button>
+                    <Button
+                        render={<a href="tel:+19283026668" />}
+                        nativeButton={false}
+                        variant="outline"
+                        className="h-10 flex-1"
+                    >
+                        <Phone className="mr-2 size-4" />
+                        {t('customOrderSupport.call')}
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 }
