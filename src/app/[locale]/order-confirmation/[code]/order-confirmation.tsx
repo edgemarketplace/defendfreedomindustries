@@ -54,13 +54,23 @@ interface OrderConfirmationProps {
     paramsPromise: Promise<{ locale: string; code: string }>;
 }
 
+async function getOrderByCode(code: string) {
+    try {
+        const {data} = await query(GetOrderByCodeQuery, {code}, {useAuthToken: true});
+        return data.orderByCode;
+    } catch {
+        // Hosted payment flows can return the customer without the original storefront auth
+        // cookie, so fall back to a public lookup by order code before failing the page.
+        const {data} = await query(GetOrderByCodeQuery, {code});
+        return data.orderByCode;
+    }
+}
+
 export async function OrderConfirmation({paramsPromise}: OrderConfirmationProps) {
     const {code} = await paramsPromise;
     const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'OrderConfirmation'});
-
-    const {data} = await query(GetOrderByCodeQuery, {code}, {useAuthToken: true});
-    const order = data.orderByCode;
+    const order = await getOrderByCode(code);
 
     if (!order) {
         notFound();
