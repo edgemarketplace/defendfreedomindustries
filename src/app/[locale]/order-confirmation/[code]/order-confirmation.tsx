@@ -5,7 +5,6 @@ import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import {Separator} from '@/components/ui/separator';
 import {Price} from '@/components/commerce/price';
-import {notFound} from 'next/navigation';
 import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 import {query} from '@/lib/vendure/api';
@@ -77,7 +76,52 @@ export async function OrderConfirmation({paramsPromise}: OrderConfirmationProps)
     const order = await getOrderByCode(code);
 
     if (!order) {
-        notFound();
+        return (
+            <div className="container mx-auto px-4 py-16">
+                <div className="max-w-2xl mx-auto">
+                    <Card>
+                        <CardHeader className="text-center space-y-4">
+                            <div className="flex justify-center">
+                                <div className="rounded-full bg-primary p-5 shadow-lg shadow-primary/20">
+                                    <Check className="h-10 w-10 text-primary-foreground" strokeWidth={3} />
+                                </div>
+                            </div>
+                            <CardTitle className="text-3xl">{t('orderConfirmed')}</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4 text-center">
+                            <p className="text-muted-foreground">
+                                We received your order, but we could not load the confirmation details from this link.
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                                Order reference: <span className="font-semibold text-foreground">{code}</span>
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                                Please check your confirmation email or contact Defend Freedom Industries at{' '}
+                                <a className="font-medium text-foreground underline underline-offset-4" href="mailto:Info@defendfreedomindustries.com">
+                                    Info@defendfreedomindustries.com
+                                </a>{' '}
+                                for help verifying your order.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                                <Button nativeButton={false} render={<Link href="/" />} className="flex-1" size="lg">
+                                    <ShoppingBag className="mr-2 h-4 w-4" />
+                                    {t('continueShopping')}
+                                </Button>
+                                <Button
+                                    nativeButton={false}
+                                    render={<a href="mailto:Info@defendfreedomindustries.com" />}
+                                    variant="outline"
+                                    className="flex-1"
+                                    size="lg"
+                                >
+                                    Contact Support
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        );
     }
 
     return (
