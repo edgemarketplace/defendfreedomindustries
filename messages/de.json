@@ -84,12 +84,6 @@
       "secureCheckout": "Sicherer Checkout",
       "reorderSupport": "Einfaches Nachbestellen"
     },
-    "customOrderSupport": {
-      "title": "Für Crew, Team oder Abteilung bestellen?",
-      "description": "DFI hilft bei Stückzahlen, Logos, Abteilungsshops und wiederkehrenden Team-Bestellungen. Melden Sie sich und wir finden die passende Lösung.",
-      "email": "DFI per E-Mail",
-      "call": "DFI anrufen"
-    },
     "faq": {
       "title": "Häufig gestellte Fragen",
       "shipping": {

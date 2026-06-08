@@ -82,12 +82,6 @@
       "secureCheckout": "Secure Checkout",
       "reorderSupport": "Easy crew reorders"
     },
-    "customOrderSupport": {
-      "title": "Need this for a crew or department?",
-      "description": "We help with bulk quantities, custom logos, department stores, and repeat team orders. Reach out and we will help you price the right setup.",
-      "email": "Email DFI",
-      "call": "Call DFI"
-    },
     "faq": {
       "title": "Frequently Asked Questions",
       "shipping": {
