@@ -176,6 +176,8 @@
     "fullName": "Vollständiger Name *",
     "company": "Firma",
     "assignedStationRank": "Zugewiesene Station / Dienstgrad",
+    "assignedStation": "Zugewiesene Station",
+    "rank": "Dienstgrad",
     "streetAddress": "Straße *",
     "apartment": "Wohnung, Suite usw.",
     "city": "Stadt *",

@@ -29,6 +29,8 @@ interface AddressFormData {
   postalCode: string;
   countryCode: string;
   phoneNumber: string;
+  assignedStation?: string;
+  rank?: string;
   assignedStationRank?: string;
 }
 
@@ -59,7 +61,7 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
 
   const buildAddressInput = (data: AddressFormData) => ({
     fullName: customerFullName || order.shippingAddress?.fullName || 'Customer',
-    company: data.assignedStationRank?.trim() || '',
+    company: [data.assignedStation?.trim(), data.rank?.trim()].filter(Boolean).join(' — ') || '',
     streetLine1: data.streetLine1,
     streetLine2: data.streetLine2 || '',
     city: data.city,
@@ -79,7 +81,8 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
         postalCode: order.shippingAddress.postalCode || '',
         countryCode: countries.find(c => c.name === order.shippingAddress?.country)?.code || countries[0]?.code || 'US',
         phoneNumber: order.shippingAddress.phoneNumber || order.customer?.phoneNumber || '',
-        assignedStationRank: order.shippingAddress.company || '',
+        assignedStation: order.shippingAddress.company || '',
+        rank: '',
       };
     }
     return {
@@ -157,15 +160,6 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
           <FieldGroup>
             <div className="grid grid-cols-2 gap-4">
               <Field className="col-span-2">
-                <FieldLabel htmlFor="assignedStationRank">{t('assignedStationRank')}</FieldLabel>
-                <Input
-                  id="assignedStationRank"
-                  {...register('assignedStationRank')}
-                />
-                <FieldError>{errors.assignedStationRank?.message}</FieldError>
-              </Field>
-
-              <Field className="col-span-2">
                 <FieldLabel htmlFor="streetLine1">{t('streetAddress')}</FieldLabel>
                 <Input
                   id="streetLine1"
@@ -232,6 +226,24 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
                   {...register('phoneNumber', { required: t('phoneRequired') })}
                 />
                 <FieldError>{errors.phoneNumber?.message}</FieldError>
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="assignedStation">{t('assignedStation')}</FieldLabel>
+                <Input
+                  id="assignedStation"
+                  {...register('assignedStation')}
+                />
+                <FieldError>{errors.assignedStation?.message}</FieldError>
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="rank">{t('rank')}</FieldLabel>
+                <Input
+                  id="rank"
+                  {...register('rank')}
+                />
+                <FieldError>{errors.rank?.message}</FieldError>
               </Field>
             </div>
 
