@@ -35,39 +35,6 @@
       "description": "Entdecken Sie Kollektionen für Alltag, Abteilungsbestellungen, Fundraiser und Team-Ausstattung.",
       "shopCollection": "Kollektion ansehen"
     },
-    "audiences": {
-      "dutyShirts": {
-        "title": "Duty Shirts und Job Shirts",
-        "description": "Saubere, verlässliche Kleidung für Crews, die gut aussehen und lange halten soll."
-      },
-      "teamStores": {
-        "title": "Team- und Abteilungsshops",
-        "description": "Organisierte Kollektionen für Abteilungen, Schulen, Einheiten und Gruppen."
-      },
-      "bulkOrders": {
-        "title": "Custom-Bestellungen in Stückzahl",
-        "description": "Einfache Bestellung für Caps, Hoodies, Shirts und wiederkehrende Team-Bedarfe."
-      }
-    },
-    "customOrders": {
-      "eyebrow": "Custom Orders",
-      "title": "Von der Idee bis zum fertigen Gear ohne Umwege.",
-      "description": "Ob kleine Crew-Bestellung oder größere Auflage für eine Organisation: DFI hält den Prozess klar, praktisch und auf tragbare Qualität ausgerichtet.",
-      "steps": {
-        "design": {
-          "title": "Idee senden",
-          "description": "Logo, Abteilung, Event oder Referenz teilen und wir formen daraus eine klare Apparel-Richtung."
-        },
-        "approve": {
-          "title": "Details freigeben",
-          "description": "Produkte, Platzierung, Größen und Preise prüfen, bevor die Bestellung weitergeht."
-        },
-        "deliver": {
-          "title": "Crew ausstatten",
-          "description": "Bestellungen werden produziert, verpackt und mit der Sorgfalt einer Team-Bestellung versendet."
-        }
-      }
-    },
     "proof": {
       "eyebrow": "Warum DFI"
     },

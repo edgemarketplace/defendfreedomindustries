@@ -33,39 +33,6 @@
       "description": "Browse collections made for everyday wear, custom department orders, fundraisers, and team outfitting.",
       "shopCollection": "Shop collection"
     },
-    "audiences": {
-      "dutyShirts": {
-        "title": "Duty shirts and job shirts",
-        "description": "Clean, dependable apparel for crews that need gear to look sharp and hold up."
-      },
-      "teamStores": {
-        "title": "Team and department stores",
-        "description": "Organized collections for departments, schools, squads, and community groups."
-      },
-      "bulkOrders": {
-        "title": "Bulk custom orders",
-        "description": "Straightforward ordering for hats, hoodies, tees, and recurring team needs."
-      }
-    },
-    "customOrders": {
-      "eyebrow": "Custom orders",
-      "title": "From design idea to finished gear without the runaround.",
-      "description": "Whether you need a small batch for the crew or a larger run for an entire organization, DFI keeps the process clear, practical, and focused on gear people will actually wear.",
-      "steps": {
-        "design": {
-          "title": "Send the idea",
-          "description": "Share your logo, department, event, or reference and we will shape it into a clean apparel direction."
-        },
-        "approve": {
-          "title": "Approve the details",
-          "description": "Review product choices, placement, sizes, and pricing before anything moves forward."
-        },
-        "deliver": {
-          "title": "Gear up the crew",
-          "description": "Orders are produced, packed, and sent out with the care a team order deserves."
-        }
-      }
-    },
     "proof": {
       "eyebrow": "Why DFI"
     },
