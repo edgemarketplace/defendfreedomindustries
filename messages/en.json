@@ -218,6 +218,7 @@
     "qty": "Qty: {quantity}",
     "subtotal": "Subtotal",
     "shipping": "Shipping",
+    "tax": "Tax",
     "toBeCalculated": "To be calculated",
     "total": "Total",
     "item": "item",

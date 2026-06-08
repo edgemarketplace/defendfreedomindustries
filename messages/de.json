@@ -220,7 +220,8 @@
     "qty": "Menge: {quantity}",
     "subtotal": "Zwischensumme",
     "shipping": "Versand",
-    "toBeCalculated": "Wird noch berechnet",
+    "tax": "Steuer",
+    "toBeCalculated": "Wird an der Kasse berechnet",
     "total": "Gesamt",
     "item": "Artikel",
     "items": "Artikel"
