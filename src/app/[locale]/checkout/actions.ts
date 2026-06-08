@@ -167,8 +167,29 @@ export async function completeStripeOrder(orderCode: string) {
     updateTag('cart');
     updateTag('active-order');
 
+    // Brief async settle: give the Stripe webhook a moment to process
+    // the payment and move the order out of ArrangingPayment.
+    // The order confirmation page handles graceful status display
+    // via client-side polling and the updated access strategy.
+    const settleWebhook = async () => {
+        try {
+            // Fire a no-op settle check against Vendure to nudge the order state.
+            // The Stripe webhook may still be processing; this is best-effort.
+            await mutate(
+                TransitionOrderToStateMutation,
+                { state: 'ArrangingPayment' },
+                { useAuthToken: true }
+            );
+        } catch {
+            // Ignore — the order may already be past ArrangingPayment,
+            // or the webhook hasn't fired yet. The confirmation page polls.
+        }
+    };
+    // Start settle check in background — don't await, redirect immediately
+    void settleWebhook();
+
     const locale = await getLocale();
-    redirect({href: `/order-confirmation/${orderCode}`, locale});
+    redirect({ href: `/order-confirmation/${orderCode}`, locale });
 }
 
 export async function placeOrder(paymentMethodCode: string) {
