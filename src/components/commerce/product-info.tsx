@@ -194,7 +194,11 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
                                             />
                                             <Label
                                                 htmlFor={option.id}
-                                                className="flex items-center justify-center rounded-lg border-2 border-muted bg-popover px-4 py-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-primary/20 peer-data-[state=checked]:bg-primary/5 cursor-pointer transition-all"
+                                                className={`flex items-center justify-center rounded-lg border-2 bg-popover px-4 py-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground cursor-pointer transition-all ${
+                                                    selectedOptions[group.id] === option.id
+                                                        ? 'border-primary ring-2 ring-primary/20 bg-primary/5 text-primary font-semibold'
+                                                        : 'border-muted'
+                                                }`}
                                             >
                                                 {option.name}
                                             </Label>
