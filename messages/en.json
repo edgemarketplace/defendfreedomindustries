@@ -444,6 +444,7 @@
     "categories": "Categories",
     "customer": "Customer",
     "contact": "Contact",
+    "subscriptions": "Subscriptions",
     "shopAll": "Shop All",
     "orders": "Orders",
     "account": "Account",
@@ -479,6 +480,7 @@
       "title": "Membership Subscriptions",
       "subtitle": "Join the DFI family. Exclusive discounts, free gifts, and member-only perks for first responders and supporters."
     },
+    "loading": "Loading membership packages...",
     "cards": {
       "perMonth": "/month",
       "subscribeNow": "Subscribe Now",

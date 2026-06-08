@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { getTranslations } from 'next-intl/server';
 import { getRouteLocale } from '@/i18n/server';
 import { query } from '@/lib/vendure/api';
@@ -14,11 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default async function SubscriptionsPage() {
-    const locale = await getRouteLocale();
-    const t = await getTranslations({ locale, namespace: 'Subscriptions' });
-
-    // Fetch both subscription products
+async function SubscriptionProducts({ locale, t }: { locale: string; t: Awaited<ReturnType<typeof getTranslations>> }) {
     const [rebelResult, patriotResult] = await Promise.all([
         query(GetProductDetailQuery, { slug: 'rebel-package' }, { languageCode: locale }),
         query(GetProductDetailQuery, { slug: 'patriot-package' }, { languageCode: locale }),
@@ -30,6 +27,19 @@ export default async function SubscriptionsPage() {
     if (!rebelProduct || !patriotProduct) {
         return null;
     }
+
+    return (
+        <SubscriptionCards
+            rebelProduct={rebelProduct}
+            patriotProduct={patriotProduct}
+            t={t}
+        />
+    );
+}
+
+export default async function SubscriptionsPage() {
+    const locale = await getRouteLocale();
+    const t = await getTranslations({ locale, namespace: 'Subscriptions' });
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
@@ -50,11 +60,9 @@ export default async function SubscriptionsPage() {
 
             {/* Subscription Cards */}
             <section className="container mx-auto px-4 py-12 md:py-20">
-                <SubscriptionCards
-                    rebelProduct={rebelProduct}
-                    patriotProduct={patriotProduct}
-                    t={t}
-                />
+                <Suspense fallback={<div className="text-center py-12 text-muted-foreground">{t('loading')}</div>}>
+                    <SubscriptionProducts locale={locale} t={t} />
+                </Suspense>
             </section>
 
             {/* Trust Badges */}
