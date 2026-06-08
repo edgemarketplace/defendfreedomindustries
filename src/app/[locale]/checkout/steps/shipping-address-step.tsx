@@ -22,7 +22,6 @@ interface ShippingAddressStepProps {
 }
 
 interface AddressFormData {
-  fullName: string;
   streetLine1: string;
   streetLine2?: string;
   city: string;
@@ -30,7 +29,7 @@ interface AddressFormData {
   postalCode: string;
   countryCode: string;
   phoneNumber: string;
-  company?: string;
+  assignedStationRank?: string;
 }
 
 export default function ShippingAddressStep({ onComplete }: ShippingAddressStepProps) {
@@ -54,14 +53,25 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
   const [saving, setSaving] = useState(false);
   const [useSameForBilling, setUseSameForBilling] = useState(true);
 
-  const getDefaultFormValues = (): Partial<AddressFormData> => {
-    const customerFullName = order.customer
-      ? `${order.customer.firstName} ${order.customer.lastName}`.trim()
-      : '';
+  const customerFullName = order.customer
+    ? `${order.customer.firstName} ${order.customer.lastName}`.trim()
+    : '';
 
+  const buildAddressInput = (data: AddressFormData) => ({
+    fullName: customerFullName || order.shippingAddress?.fullName || 'Customer',
+    company: data.assignedStationRank?.trim() || '',
+    streetLine1: data.streetLine1,
+    streetLine2: data.streetLine2 || '',
+    city: data.city,
+    province: data.province,
+    postalCode: data.postalCode,
+    countryCode: data.countryCode,
+    phoneNumber: data.phoneNumber,
+  });
+
+  const getDefaultFormValues = (): Partial<AddressFormData> => {
     if (isGuest && order.shippingAddress?.streetLine1) {
       return {
-        fullName: order.shippingAddress.fullName || customerFullName,
         streetLine1: order.shippingAddress.streetLine1 || '',
         streetLine2: order.shippingAddress.streetLine2 || '',
         city: order.shippingAddress.city || '',
@@ -69,11 +79,10 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
         postalCode: order.shippingAddress.postalCode || '',
         countryCode: countries.find(c => c.name === order.shippingAddress?.country)?.code || countries[0]?.code || 'US',
         phoneNumber: order.shippingAddress.phoneNumber || order.customer?.phoneNumber || '',
-        company: order.shippingAddress.company || '',
+        assignedStationRank: order.shippingAddress.company || '',
       };
     }
     return {
-      fullName: customerFullName,
       countryCode: countries[0]?.code || 'US',
       phoneNumber: order.customer?.phoneNumber || '',
     };
@@ -115,7 +124,7 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
   const onSaveNewAddress = async (data: AddressFormData) => {
     setSaving(true);
     try {
-      const newAddress = await createCustomerAddress(data);
+      const newAddress = await createCustomerAddress(buildAddressInput(data));
       setDialogOpen(false);
       reset();
       router.refresh();
@@ -131,7 +140,7 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
   const onSubmitGuestAddress = async (data: AddressFormData) => {
     setLoading(true);
     try {
-      await setShippingAddress(data, useSameForBilling);
+      await setShippingAddress(buildAddressInput(data), useSameForBilling);
       router.refresh();
       onComplete();
     } catch (error) {
@@ -148,17 +157,12 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
           <FieldGroup>
             <div className="grid grid-cols-2 gap-4">
               <Field className="col-span-2">
-                <FieldLabel htmlFor="fullName">{t('fullName')}</FieldLabel>
+                <FieldLabel htmlFor="assignedStationRank">{t('assignedStationRank')}</FieldLabel>
                 <Input
-                  id="fullName"
-                  {...register('fullName', { required: t('fullNameRequired') })}
+                  id="assignedStationRank"
+                  {...register('assignedStationRank')}
                 />
-                <FieldError>{errors.fullName?.message}</FieldError>
-              </Field>
-
-              <Field className="col-span-2">
-                <FieldLabel htmlFor="company">{t('company')}</FieldLabel>
-                <Input id="company" {...register('company')} />
+                <FieldError>{errors.assignedStationRank?.message}</FieldError>
               </Field>
 
               <Field className="col-span-2">
@@ -267,8 +271,6 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
                 <Label htmlFor={address.id} className="flex-1 cursor-pointer">
                   <Card className="p-4">
                     <div className="leading-tight space-y-0">
-                      <p className="font-medium">{address.fullName}</p>
-                      {address.company && <p className="text-sm text-muted-foreground">{address.company}</p>}
                       <p className="text-sm text-muted-foreground">
                         {address.streetLine1}
                         {address.streetLine2 && `, ${address.streetLine2}`}
@@ -278,6 +280,11 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
                       </p>
                       <p className="text-sm text-muted-foreground">{address.country.name}</p>
                       <p className="text-sm text-muted-foreground">{address.phoneNumber}</p>
+                      {address.company && (
+                        <p className="text-sm text-muted-foreground">
+                          {t('assignedStationRank')}: {address.company}
+                        </p>
+                      )}
                     </div>
                   </Card>
                 </Label>
@@ -325,17 +332,12 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
                   <FieldGroup className="my-6">
                     <div className="grid grid-cols-2 gap-4">
                       <Field className="col-span-2">
-                        <FieldLabel htmlFor="fullName">{t('fullNameLabel')}</FieldLabel>
+                        <FieldLabel htmlFor="assignedStationRank">{t('assignedStationRank')}</FieldLabel>
                         <Input
-                          id="fullName"
-                          {...register('fullName')}
+                          id="assignedStationRank"
+                          {...register('assignedStationRank')}
                         />
-                        <FieldError>{errors.fullName?.message}</FieldError>
-                      </Field>
-
-                      <Field className="col-span-2">
-                        <FieldLabel htmlFor="company">{t('company')}</FieldLabel>
-                        <Input id="company" {...register('company')} />
+                        <FieldError>{errors.assignedStationRank?.message}</FieldError>
                       </Field>
 
                       <Field className="col-span-2">
@@ -442,17 +444,12 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
               <FieldGroup className="my-6">
                 <div className="grid grid-cols-2 gap-4">
                   <Field className="col-span-2">
-                    <FieldLabel htmlFor="fullName">{t('fullNameLabel')}</FieldLabel>
+                    <FieldLabel htmlFor="assignedStationRank">{t('assignedStationRank')}</FieldLabel>
                     <Input
-                      id="fullName"
-                      {...register('fullName')}
+                      id="assignedStationRank"
+                      {...register('assignedStationRank')}
                     />
-                    <FieldError>{errors.fullName?.message}</FieldError>
-                  </Field>
-
-                  <Field className="col-span-2">
-                    <FieldLabel htmlFor="company">{t('company')}</FieldLabel>
-                    <Input id="company" {...register('company')} />
+                    <FieldError>{errors.assignedStationRank?.message}</FieldError>
                   </Field>
 
                   <Field className="col-span-2">

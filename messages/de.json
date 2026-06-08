@@ -175,6 +175,7 @@
     "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten",
     "fullName": "Vollständiger Name *",
     "company": "Firma",
+    "assignedStationRank": "Zugewiesene Station / Dienstgrad",
     "streetAddress": "Straße *",
     "apartment": "Wohnung, Suite usw.",
     "city": "Stadt *",

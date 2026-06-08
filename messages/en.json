@@ -173,6 +173,7 @@
     "unexpectedError": "An unexpected error occurred",
     "fullName": "Full Name *",
     "company": "Company",
+    "assignedStationRank": "Assigned Station Rank",
     "streetAddress": "Street Address *",
     "apartment": "Apartment, suite, etc.",
     "city": "City *",
