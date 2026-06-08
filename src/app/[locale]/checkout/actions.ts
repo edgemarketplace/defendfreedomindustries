@@ -196,21 +196,18 @@ export async function placeOrder(paymentMethodCode: string) {
     // First, transition the order to ArrangingPayment state
     await transitionToArrangingPayment();
 
-    if (paymentMethodCode.toLowerCase().includes('stripe')) {
-        throw new Error('Stripe payments must be confirmed with the secure card form.');
-    }
-
     // Prepare metadata based on payment method
     const metadata: Record<string, unknown> = {};
 
-    // For standard payment, include the required fields
-    if (paymentMethodCode === 'standard-payment') {
+    // For dummy/external payment handlers, include the required fields
+    if (paymentMethodCode === 'standard-payment' || paymentMethodCode === 'external-payment') {
         metadata.shouldDecline = false;
         metadata.shouldError = false;
         metadata.shouldErrorOnSettle = false;
     }
 
-    // Add payment to the order
+    // Add payment to the order — with automaticSettle dummy handler,
+    // this immediately transitions to PaymentSettled and fires the OrderWebhook
     const result = await mutate(
         AddPaymentToOrderMutation,
         {

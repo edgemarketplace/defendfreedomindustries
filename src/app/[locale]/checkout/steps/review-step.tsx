@@ -7,7 +7,6 @@ import { useCheckout } from '../checkout-provider';
 import { placeOrder as placeOrderAction } from '../actions';
 import { Price } from '@/components/commerce/price';
 import {useTranslations} from 'next-intl';
-import StripePaymentPanel from '../stripe-payment-panel';
 
 interface ReviewStepProps {
   onEditStep: (step: 'contact' | 'shipping' | 'delivery' | 'payment') => void;
@@ -21,7 +20,6 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
   const selectedPaymentMethod = paymentMethods.find(
     (method) => method.code === selectedPaymentMethodCode
   );
-  const isStripePayment = selectedPaymentMethodCode?.toLowerCase().includes('stripe') ?? false;
 
   const handlePlaceOrder = async () => {
     if (!selectedPaymentMethodCode) return;
@@ -83,10 +81,10 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
                   {order.shippingAddress.streetLine2 && `, ${order.shippingAddress.streetLine2}`}
                 </p>
                 <p className="text-muted-foreground">
-                  {order.shippingAddress.city}, {order.shippingAddress.province} {order.shippingAddress.postalCode}
+                  {order.shippingAddress.city}, {order.shippingAddress.province}{' '}
+                  {order.shippingAddress.postalCode}
                 </p>
                 <p className="text-muted-foreground">{order.shippingAddress.country}</p>
-                <p className="text-muted-foreground">{order.shippingAddress.phoneNumber}</p>
               </div>
               <Button
                 variant="outline"
@@ -163,22 +161,16 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
         </div>
       </div>
 
-      {isStripePayment ? (
-        <StripePaymentPanel
-          orderCode={order.code}
-          disabled={!order.shippingAddress || !order.shippingLines?.length || !selectedPaymentMethodCode}
-        />
-      ) : (
-        <Button
-          onClick={handlePlaceOrder}
-          disabled={loading || !order.shippingAddress || !order.shippingLines?.length || !selectedPaymentMethodCode}
-          size="lg"
-          className="w-full"
-        >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {t('placeOrder')}
-        </Button>
-      )}
+      {/* Pay Now Button */}
+      <Button
+        onClick={handlePlaceOrder}
+        disabled={loading || !order.shippingAddress || !order.shippingLines?.length || !selectedPaymentMethodCode}
+        size="lg"
+        className="w-full h-12 text-base font-semibold"
+      >
+        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {t('payNow')}
+      </Button>
 
       {(!order.shippingAddress || !order.shippingLines?.length || !selectedPaymentMethodCode) && (
         <p className="text-sm text-destructive text-center">
