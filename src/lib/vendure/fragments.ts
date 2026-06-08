@@ -19,6 +19,16 @@ export const ProductCardFragment = graphql(`
                 value
             }
         }
+        price {
+            __typename
+            ... on PriceRange {
+                min
+                max
+            }
+            ... on SinglePrice {
+                value
+            }
+        }
         currencyCode
     }
 `);

@@ -124,6 +124,7 @@
     "orderSummary": "Order Summary",
     "subtotal": "Subtotal",
     "shipping": "Shipping",
+    "tax": "Tax",
     "calculatedAtCheckout": "Calculated at checkout",
     "total": "Total",
     "proceedToCheckout": "Proceed to Checkout",

@@ -69,6 +69,7 @@ export const GetProductDetailQuery = graphql(`
                 id
                 name
                 sku
+                price
                 priceWithTax
                 stockLevel
                 options {
@@ -122,6 +123,7 @@ export const GetActiveOrderQuery = graphql(`
             couponCodes
             discounts {
                 description
+                amount
                 amountWithTax
             }
             lines {
@@ -140,8 +142,10 @@ export const GetActiveOrderQuery = graphql(`
                         }
                     }
                 }
+                unitPrice
                 unitPriceWithTax
                 quantity
+                linePrice
                 linePriceWithTax
             }
         }
@@ -198,10 +202,12 @@ export const GetActiveOrderForCheckoutQuery = graphql(`
                     name
                     description
                 }
+                price
                 priceWithTax
             }
             discounts {
                 description
+                amount
                 amountWithTax
             }
             lines {
@@ -220,8 +226,10 @@ export const GetActiveOrderForCheckoutQuery = graphql(`
                         }
                     }
                 }
+                unitPrice
                 unitPriceWithTax
                 quantity
+                linePrice
                 linePriceWithTax
             }
         }
@@ -261,6 +269,7 @@ export const GetEligibleShippingMethodsQuery = graphql(`
             name
             code
             description
+            price
             priceWithTax
         }
     }
@@ -375,6 +384,7 @@ export const GetOrderDetailQuery = graphql(`
                     name
                     description
                 }
+                price
                 priceWithTax
             }
             payments {
@@ -401,12 +411,15 @@ export const GetOrderDetailQuery = graphql(`
                         }
                     }
                 }
+                unitPrice
                 unitPriceWithTax
                 quantity
+                linePrice
                 linePriceWithTax
             }
             discounts {
                 description
+                amount
                 amountWithTax
             }
         }

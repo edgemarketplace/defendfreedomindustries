@@ -126,6 +126,7 @@
     "orderSummary": "Bestellübersicht",
     "subtotal": "Zwischensumme",
     "shipping": "Versand",
+    "tax": "Steuer",
     "calculatedAtCheckout": "Wird an der Kasse berechnet",
     "total": "Gesamt",
     "proceedToCheckout": "Zur Kasse",

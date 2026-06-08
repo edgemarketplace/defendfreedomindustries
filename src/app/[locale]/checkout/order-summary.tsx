@@ -46,7 +46,7 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
               </p>
             </div>
             <div className="text-sm font-medium">
-              <Price value={line.linePriceWithTax} currencyCode={order.currencyCode} />
+              <Price value={line.linePrice} currencyCode={order.currencyCode} />
             </div>
           </div>
         ))}
@@ -58,7 +58,7 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">{t('subtotal')}</span>
           <span>
-            <Price value={order.subTotalWithTax} currencyCode={order.currencyCode} />
+            <Price value={order.subTotal} currencyCode={order.currencyCode} />
           </span>
         </div>
 
@@ -68,7 +68,7 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
               <div key={index} className="flex justify-between text-sm text-green-600">
                 <span>{discount.description}</span>
                 <span>
-                  <Price value={discount.amountWithTax} currencyCode={order.currencyCode} />
+                  <Price value={discount.amount} currencyCode={order.currencyCode} />
                 </span>
               </div>
             ))}
@@ -78,11 +78,20 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">{t('shipping')}</span>
           <span>
-            {order.shippingWithTax > 0
-              ? <Price value={order.shippingWithTax} currencyCode={order.currencyCode} />
+            {order.shipping > 0
+              ? <Price value={order.shipping} currencyCode={order.currencyCode} />
               : t('toBeCalculated')}
           </span>
         </div>
+
+        {order.subTotalWithTax > order.subTotal && (
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">{t('tax')}</span>
+            <span>
+              <Price value={order.subTotalWithTax - order.subTotal} currencyCode={order.currencyCode} />
+            </span>
+          </div>
+        )}
       </div>
 
       <Separator />
