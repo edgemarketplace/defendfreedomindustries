@@ -59,12 +59,25 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
     const [isPending, startTransition] = useTransition();
     const [isAdded, setIsAdded] = useState(false);
 
+    const optionIdsWithVariants = useMemo(() => {
+        return new Set(product.variants.flatMap((variant) => variant.options.map((option) => option.id)));
+    }, [product.variants]);
+
+    const displayOptionGroups = useMemo(() => {
+        return product.optionGroups
+            .map((group) => ({
+                ...group,
+                options: group.options.filter((option) => optionIdsWithVariants.has(option.id)),
+            }))
+            .filter((group) => group.options.length > 0);
+    }, [product.optionGroups, optionIdsWithVariants]);
+
     // Initialize selected options from URL
     const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(() => {
         const initialOptions: Record<string, string> = {};
 
         // Load from URL search params
-        product.optionGroups.forEach((group) => {
+        displayOptionGroups.forEach((group) => {
             const paramValue = searchParams[group.code];
             if (typeof paramValue === 'string') {
                 // Find the option by code
@@ -85,7 +98,7 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
         }
 
         // If not all option groups have a selection, return null
-        if (Object.keys(selectedOptions).length !== product.optionGroups.length) {
+        if (Object.keys(selectedOptions).length !== displayOptionGroups.length) {
             return null;
         }
 
@@ -95,7 +108,7 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
             const selectedOptionIds = Object.values(selectedOptions);
             return selectedOptionIds.every((optId) => variantOptionIds.includes(optId));
         });
-    }, [selectedOptions, product.variants, product.optionGroups]);
+    }, [selectedOptions, product.variants, displayOptionGroups]);
 
     const handleOptionChange = (groupId: string, optionId: string) => {
         setSelectedOptions((prev) => ({
@@ -104,7 +117,7 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
         }));
 
         // Find the option group and option to get their codes
-        const group = product.optionGroups.find((g) => g.id === groupId);
+        const group = displayOptionGroups.find((g) => g.id === groupId);
         const option = group?.options.find((opt) => opt.id === optionId);
 
         if (group && option) {
@@ -160,9 +173,9 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
             </div>
 
             {/* Option Groups */}
-            {product.optionGroups.length > 0 && (
+            {displayOptionGroups.length > 0 && (
                 <div className="space-y-5">
-                    {product.optionGroups.map((group) => (
+                    {displayOptionGroups.map((group) => (
                         <div key={group.id} className="space-y-3">
                             <Label className="text-base font-semibold">
                                 {group.name}
@@ -229,7 +242,7 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
                             <ShoppingCart className="mr-2 h-5 w-5"/>
                             {isPending
                                 ? t('adding')
-                                : !selectedVariant && product.optionGroups.length > 0
+                                : !selectedVariant && displayOptionGroups.length > 0
                                     ? t('selectOptions')
                                     : !isInStock
                                         ? t('outOfStock')
