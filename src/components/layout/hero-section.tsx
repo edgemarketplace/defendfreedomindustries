@@ -3,7 +3,7 @@ import {Link} from '@/i18n/navigation';
 import {getTranslations} from 'next-intl/server';
 import {getRouteLocale} from '@/i18n/server';
 import Image from 'next/image';
-import {ArrowRight, ShieldCheck, Sparkles, Truck} from 'lucide-react';
+import {ArrowRight, ShieldCheck} from 'lucide-react';
 
 const heroImages = [
     "https://api.defendfreedomindustries.com/assets/source/f2/20231005_025659790_ios.jpeg",
@@ -16,11 +16,6 @@ export async function HeroSection() {
     const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Hero'});
     const carouselImages = [...heroImages, ...heroImages];
-    const highlights = [
-        {icon: ShieldCheck, label: t('highlights.firstResponder')},
-        {icon: Sparkles, label: t('highlights.customWork')},
-        {icon: Truck, label: t('highlights.reliableDelivery')},
-    ];
 
     return (
         <section className="relative min-h-[66svh] overflow-hidden bg-background">
@@ -72,14 +67,6 @@ export async function HeroSection() {
                         >
                             {t('viewCollections')}
                         </a>
-                    </div>
-                    <div className="grid max-w-2xl gap-3 pt-3 sm:grid-cols-3">
-                        {highlights.map((highlight) => (
-                            <div key={highlight.label} className="flex items-center gap-2 rounded-[8px] border bg-background/85 px-3 py-3 text-sm font-medium shadow-sm backdrop-blur">
-                                <highlight.icon className="size-4 text-primary" />
-                                <span>{highlight.label}</span>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </div>
