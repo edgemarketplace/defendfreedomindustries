@@ -3,6 +3,7 @@
     "openMenu": "Open menu",
     "menu": "Menu",
     "searchProducts": "Search products...",
+    "subscriptions": "Subscriptions",
     "shopAll": "Shop All",
     "collections": "Collections",
     "account": "Account",
@@ -468,5 +469,40 @@
     "failedPasswordReset": "Failed to request password reset",
     "verificationTokenRequired": "Verification token is required",
     "failedAddToCart": "Failed to add item to cart"
+  },
+  "Subscriptions": {
+    "pageTitle": "Membership Subscriptions | Defend Freedom Industries",
+    "pageDescription": "Join the DFI family with exclusive membership packages. Save on apparel, get free gifts, and enjoy member-only perks.",
+    "hero": {
+      "title": "Membership Subscriptions",
+      "subtitle": "Join the DFI family. Exclusive discounts, free gifts, and member-only perks for first responders and supporters."
+    },
+    "cards": {
+      "perMonth": "/month",
+      "subscribeNow": "Subscribe Now",
+      "added": "Added to Cart!",
+      "processing": "Processing...",
+      "addedToast": "{{ name }} added to cart",
+      "errorToast": "Could not add to cart",
+      "rebel": {
+        "badge": "REBEL",
+        "title": "REBEL PACKAGE",
+        "yearlyGiftsTitle": "Yearly Free Gift (Choose One)",
+        "yearlyGiftsDesc": "Free DFI Hat, Basic T-Shirt, or Exclusive Member Patch Pack"
+      },
+      "patriot": {
+        "badge": "PATRIOT",
+        "title": "PATRIOT PACKAGE",
+        "popular": "Most Popular",
+        "yearlyGiftsTitle": "Yearly Free Gifts (Choose Two)",
+        "yearlyGiftsDesc": "Premium Hat, Hoodie, Mid-Grade T-Shirt, or Embroidery Credit"
+      }
+    },
+    "trust": {
+      "startingAt": "Starting at $9.99/mo",
+      "memberDiscounts": "10-20% Member Discounts",
+      "yearlyGifts": "Free Yearly Gifts",
+      "support": "Member Support"
+    }
   }
 }

@@ -71,6 +71,14 @@ export async function Footer() {
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li>
                                 <Link
+                                    href="/subscriptions"
+                                    className="hover:text-foreground transition-colors"
+                                >
+                                    {t('subscriptions')}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
                                     href="/search"
                                     className="hover:text-foreground transition-colors"
                                 >

@@ -15,7 +15,8 @@
     "shoppingCart": "Warenkorb",
     "checkout": "Zur Kasse",
     "switchLanguage": "Sprache wechseln",
-    "switchCurrency": "Währung wechseln"
+    "switchCurrency": "Währung wechseln",
+    "subscriptions": "Mitgliedschaften"
   },
   "Hero": {
     "eyebrow": "Custom-Apparel für Teams",
@@ -475,5 +476,40 @@
     "failedPasswordReset": "Passwort-Zurücksetzung konnte nicht angefordert werden",
     "verificationTokenRequired": "Bestätigungs-Token ist erforderlich",
     "failedAddToCart": "Artikel konnte nicht zum Warenkorb hinzugefügt werden"
+  },
+  "Subscriptions": {
+    "pageTitle": "Mitgliedschaften | Defend Freedom Industries",
+    "pageDescription": "Werden Sie DFI-Mitglied mit exklusiven Paketen. Sparen Sie auf Bekleidung, erhalten Sie Geschenke und genießen Sie Mitglieder-Vorteile.",
+    "hero": {
+      "title": "Mitgliedschaften",
+      "subtitle": "Werden Sie Teil der DFI-Familie. Exklusive Rabatte, Geschenke und Mitglieder-Vorteile für Ersthelfer und Unterstützer."
+    },
+    "cards": {
+      "perMonth": "/Monat",
+      "subscribeNow": "Jetzt abonnieren",
+      "added": "Zum Warenkorb hinzugefügt!",
+      "processing": "Wird verarbeitet...",
+      "addedToast": "{{ name }} zum Warenkorb hinzugefügt",
+      "errorToast": "Konnte nicht zum Warenkorb hinzugefügt werden",
+      "rebel": {
+        "badge": "REBEL",
+        "title": "REBEL PAKET",
+        "yearlyGiftsTitle": "Jährliches Geschenk (Eins auswählen)",
+        "yearlyGiftsDesc": "Grüner DFI-Hut, Basic T-Shirt oder exklusives Member Patch Pack"
+      },
+      "patriot": {
+        "badge": "PATRIOT",
+        "title": "PATRIOT PAKET",
+        "popular": "Beliebteste Wahl",
+        "yearlyGiftsTitle": "Jährliche Geschenke (Zwei auswählen)",
+        "yearlyGiftsDesc": "Premium Hut, Hoodie, Mid-Grade T-Shirt oder Stickerei-Guthaben"
+      }
+    },
+    "trust": {
+      "startingAt": "Ab $9.99/Monat",
+      "memberDiscounts": "10-20% Mitgliederrabatte",
+      "yearlyGifts": "Jährliche Geschenke",
+      "support": "Mitglieder-Support"
+    }
   }
 }
