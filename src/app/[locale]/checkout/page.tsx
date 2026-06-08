@@ -29,9 +29,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CheckoutPage() {
-    // Checkout depends on per-request Vendure session cookies. Without this
-    // boundary, Next can serve a prerendered empty-cart checkout shell and later
-    // client/server actions fail against the wrong active-order state.
     await connection();
     noStore();
 
@@ -39,25 +36,39 @@ export default async function CheckoutPage() {
     const currencyCode = await getActiveCurrencyCode();
     const t = await getTranslations({locale, namespace: 'Checkout'});
     const authToken = await getAuthToken();
-    const customerRes = await query(GetActiveCustomerQuery, undefined, {
-        token: authToken,
-        fetch: {cache: 'no-store'},
-    });
-    const customer = customerRes.data.activeCustomer;
+
+    // Fetch customer — if this fails, treat as guest
+    let customer = null;
+    try {
+        const customerRes = await query(GetActiveCustomerQuery, undefined, {
+            token: authToken,
+            fetch: {cache: 'no-store'},
+        });
+        customer = customerRes.data.activeCustomer;
+    } catch {
+        // No active customer / guest checkout
+    }
     const isGuest = !customer;
 
     const perSessionFetch = {cache: 'no-store' as const};
 
-    const [orderRes, addressesRes, countries, shippingMethodsRes, paymentMethodsRes] =
-        await Promise.all([
-            query(GetActiveOrderForCheckoutQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
-            isGuest
-                ? Promise.resolve({ data: { activeCustomer: null } })
-                : query(GetCustomerAddressesQuery, {}, {token: authToken, fetch: perSessionFetch}),
-            getAvailableCountriesCached(locale),
-            query(GetEligibleShippingMethodsQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
-            query(GetEligiblePaymentMethodsQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
-        ]);
+    // Fetch all checkout data — if any critical query fails, redirect to cart
+    let orderRes, addressesRes, countries, shippingMethodsRes, paymentMethodsRes;
+    try {
+        [orderRes, addressesRes, countries, shippingMethodsRes, paymentMethodsRes] =
+            await Promise.all([
+                query(GetActiveOrderForCheckoutQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
+                isGuest
+                    ? Promise.resolve({ data: { activeCustomer: null } })
+                    : query(GetCustomerAddressesQuery, {}, {token: authToken, fetch: perSessionFetch}),
+                getAvailableCountriesCached(locale),
+                query(GetEligibleShippingMethodsQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
+                query(GetEligiblePaymentMethodsQuery, {}, {token: authToken, currencyCode, fetch: perSessionFetch}),
+            ]);
+    } catch {
+        // If any query fails (e.g. Vendure API unreachable), redirect to cart
+        return redirect({href: '/cart', locale});
+    }
 
     const activeOrder = orderRes.data.activeOrder;
 
