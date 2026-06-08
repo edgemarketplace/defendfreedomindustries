@@ -1,4 +1,5 @@
 import {cacheLife, cacheTag} from 'next/cache';
+import {cleanDisplayText} from '@/lib/display-text';
 import {query} from './api';
 import {GetActiveChannelQuery, GetAvailableCountriesQuery, GetTopCollectionsQuery} from './queries';
 
@@ -41,5 +42,8 @@ export async function getTopCollections(locale: string) {
     cacheTag(`collections-${locale}`);
 
     const result = await query(GetTopCollectionsQuery, undefined, {languageCode: locale});
-    return result.data.collections.items;
+    return result.data.collections.items.map((collection) => ({
+        ...collection,
+        name: cleanDisplayText(collection.name),
+    }));
 }

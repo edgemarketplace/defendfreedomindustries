@@ -28,6 +28,7 @@ import {getActiveCurrencyCode} from '@/lib/currency-server';
 import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 import {localizePath} from '@/lib/localized-path';
+import {cleanDisplayText} from '@/lib/display-text';
 
 async function getCollectionProducts(slug: string, searchParams: { [key: string]: string | string[] | undefined }, currencyCode: string) {
     'use cache';
@@ -74,14 +75,15 @@ export async function generateMetadata({
         };
     }
 
+    const collectionName = cleanDisplayText(collection.name);
     const description =
         truncateDescription(collection.description) ||
-        t('browseCollectionAt', {name: collection.name, siteName: SITE_NAME});
+        t('browseCollectionAt', {name: collectionName, siteName: SITE_NAME});
     const ogLocale = toOgLocale(locale);
     const collectionPath = `/collection/${collection.slug}`;
 
     return {
-        title: collection.name,
+        title: collectionName,
         description,
         alternates: {
             canonical: buildCanonicalUrl(localizePath(collectionPath, locale)),
@@ -90,16 +92,16 @@ export async function generateMetadata({
             ),
         },
         openGraph: {
-            title: collection.name,
+            title: collectionName,
             description,
             type: 'website',
             locale: ogLocale,
             url: buildCanonicalUrl(localizePath(collectionPath, locale)),
-            images: buildOgImages(collection.featuredAsset?.preview, collection.name),
+            images: buildOgImages(collection.featuredAsset?.preview, collectionName),
         },
         twitter: {
             card: 'summary_large_image',
-            title: collection.name,
+            title: collectionName,
             description,
             images: collection.featuredAsset?.preview
                 ? [collection.featuredAsset.preview]
@@ -118,7 +120,7 @@ export default async function CollectionPage({params, searchParams}: PageProps<'
 
     const productDataPromise = getCollectionProducts(slug, searchParamsResolved, currencyCode);
     const collectionResult = await getCollectionMetadata(slug);
-    const collectionName = collectionResult.data.collection?.name ?? slug;
+    const collectionName = cleanDisplayText(collectionResult.data.collection?.name ?? slug);
 
     return (
         <div className="container mx-auto px-4 py-8 mt-16">
